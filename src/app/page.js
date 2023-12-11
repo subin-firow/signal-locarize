@@ -1,95 +1,118 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
 
-export default function Home() {
+import React from "react";
+import {
+  Box,
+  Container,
+  Grid,
+  LinearProgress,
+  Typography,
+  linearProgressClasses,
+} from "@mui/material";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import PanToolIcon from '@mui/icons-material/PanTool';
+import { styled } from "@mui/system";
+
+const HomePage = () => {
+  const data = {
+    // success
+
+    // title: "Welcome",
+    // subTitle: "Please do not enter the store at the moment",
+    // color: "#5fd461",
+    // Icon: ThumbUpOffAltIcon,
+    // progress: 50,
+    // utilization: "2.5%",
+
+    //warning
+
+    // title: "Attention",
+    // subTitle: "One person per minute",
+    // color: "#d6cf49",
+    // Icon: WarningAmberIcon,
+    // progress: 50,
+
+    //stop
+
+    title: "Stop",
+    subTitle: "Please do not enter the store at the moment",
+    color: "#b95858",
+    Icon: PanToolIcon,
+    progress: 50,
+  };
+
+  const GlassmorphicGrid = styled(Grid)({
+    background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
+    backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
+    borderRadius: "8px", // Adjust the border radius as needed
+    padding: "16px", // Add padding for a better visual effect
+  });
+
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 15,
+    borderRadius: 15,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor: "white",
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor:
+        theme.palette.mode === "light" ? `${data.color}` : "#308fe8",
+    },
+  }));
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <Box sx={{ backgroundColor: data.color, minHeight: "100vh" }}>
+      <Container sx={{ padding: 6 }}>
+        <Grid container spacing={3}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: { md: "flex" },
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+            <data.Icon sx={{ color: "white", fontSize: "55vh", marginBottom:2 }} />
+            {data?.utilization && (
+              <Typography sx={{ color: "white", fontSize: "35vh" }}>
+                {data?.utilization}
+              </Typography>
+            )}
+          </Grid>
+          <GlassmorphicGrid item xs={12}>
+            <BorderLinearProgress variant="determinate" value={data.progress} />
+            <Typography
+              variant="h2"
+              sx={{
+                textTransform: "uppercase",
+                textAlign: "center",
+                fontWeight: 600,
+                color: "white",
+                padding: 2,
+              }}
+            >
+              {data.title}
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                textTransform: "none",
+                textAlign: "center",
+                color: "white",
+                padding: 2,
+              }}
+            >
+              {data.subTitle}
+            </Typography>
+          </GlassmorphicGrid>
+          <Grid item xs={12}></Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+export default HomePage;
