@@ -41,10 +41,14 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
         backgroundColor: color,
         minHeight: "80vh",
         borderRadius: "8px",
+        border:'solid red 1px',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
       }}
     >
       <Container>
-        <Grid container height={'80vh'}>
+        <Grid container>
           <Grid
             item
             xs={12}
@@ -54,14 +58,14 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
               alignItems: "center",
             }}
           >
-            <Icon sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }} />
+            {icon && <Icon sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }} />}
             {type && (
               <Typography sx={{ color: "white", fontSize: "15vh" }}>
                 {type}
               </Typography>
             )}
           </Grid>
-          <GlassmorphicGrid item xs={12} marginX={5} marginBottom={4}>
+          <GlassmorphicGrid item xs={12}  marginBottom={4}>
             <BorderLinearProgress variant="determinate" value={threshold} />
             <Typography
               variant="h2"
