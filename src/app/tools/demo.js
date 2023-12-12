@@ -41,7 +41,6 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
         backgroundColor: color,
         minHeight: "80vh",
         borderRadius: "8px",
-        border:'solid red 1px',
         display:'flex',
         justifyContent:'center',
         alignItems:'center'
