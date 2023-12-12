@@ -12,8 +12,8 @@ import {
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { styled } from "@mui/system";
 
-const Demo = ({ title, subtitle, icon, threshold, color, type }) => {
-  console.log("🚀 ~ file: demo.js:16 ~ Demo ~ icon:", icon)
+const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
+  console.log("🚀 ~ file: demo.js:16 ~ Demo ~ subtitle:", subTitle)
   const Icon = icon ? icon : ThumbUpOffAltIcon;
   const GlassmorphicGrid = styled(Grid)({
     background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
@@ -39,7 +39,7 @@ const Demo = ({ title, subtitle, icon, threshold, color, type }) => {
     <Box
       sx={{
         backgroundColor: color,
-        minHeight: "100%",
+        minHeight: "50vh",
         borderRadius: "8px",
       }}
     >
@@ -84,7 +84,7 @@ const Demo = ({ title, subtitle, icon, threshold, color, type }) => {
                 padding: 2,
               }}
             >
-              {subtitle}
+              {subTitle}
             </Typography>
           </GlassmorphicGrid>
         </Grid>

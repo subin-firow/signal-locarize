@@ -42,7 +42,7 @@ const Tools = () => {
   });
   const [warning, setWarning] = useState({
     threshold: 10,
-    color: "#68d391",
+    color: "#f6e05e",
     icon: ThumbUpOffAltIcon,
     title: "Enter Here",
     subTitle: "Please enter text here",
@@ -50,7 +50,7 @@ const Tools = () => {
   });
   const [stop, setStop] = useState({
     threshold: 10,
-    color: "#68d391",
+    color: "#fc8181",
     icon: ThumbUpOffAltIcon,
     title: "Enter Here",
     subTitle: "Please enter text here",
@@ -92,16 +92,19 @@ const Tools = () => {
   const handleEnterChange = (event) => {
     const { name, value } = event.target;
     setEnter((prevData) => ({ ...prevData, [name]: value }));
+    setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleWarningChange = (event) => {
     const { name, value } = event.target;
     setWarning((prevData) => ({ ...prevData, [name]: value }));
+    setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleStopChange = (event) => {
     const { name, value } = event.target;
     setStop((prevData) => ({ ...prevData, [name]: value }));
+    setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const onSave = () => {
