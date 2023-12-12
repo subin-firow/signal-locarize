@@ -39,17 +39,17 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
     <Box
       sx={{
         backgroundColor: color,
-        minHeight: "50vh",
+        minHeight: "80vh",
         borderRadius: "8px",
       }}
     >
       <Container>
-        <Grid container>
+        <Grid container height={'80vh'}>
           <Grid
             item
             xs={12}
             sx={{
-              display: { md: "flex" },
+              display: "flex" ,
               justifyContent: "center",
               alignItems: "center",
             }}

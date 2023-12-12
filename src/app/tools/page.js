@@ -578,7 +578,7 @@ const Tools = () => {
           </AccordionDetails>
         </Accordion>
       </Grid>
-      <Grid xs={12} md={8} padding={2} height={"100%"}>
+      <Grid xs={12} md={8} padding={4} height={'80vh'}>
         <Demo
           title={activeItem?.title}
           subTitle={activeItem?.subTitle}
