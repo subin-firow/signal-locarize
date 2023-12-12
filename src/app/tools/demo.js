@@ -20,6 +20,10 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
     borderRadius: "8px", // Adjust the border radius as needed
     padding: "16px", // Add padding for a better visual effect
+    border:'solid red',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
   });
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
