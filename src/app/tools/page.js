@@ -38,7 +38,9 @@ const Tools = () => {
     company_id: "example_company_id",
     uid: "example_uid",
     display_type: "Enter",
+    location_id: "example_location",
     domain: "example_domain",
+    threshold_type: "",
   };
 
   const [enter, setEnter] = useState({
@@ -51,7 +53,9 @@ const Tools = () => {
     company_id: "example_company_id",
     uid: "example_uid",
     display_type: "Enter",
+    location_id: "example_location",
     domain: "example_domain",
+    threshold_type: "",
   });
   const [warning, setWarning] = useState({
     threshold: 10,
@@ -63,7 +67,9 @@ const Tools = () => {
     company_id: "example_company_id",
     uid: "example_uid",
     display_type: "Warning",
+    location_id: "example_location",
     domain: "example_domain",
+    threshold_type: "",
   });
   const [stop, setStop] = useState({
     threshold: 10,
@@ -75,7 +81,9 @@ const Tools = () => {
     company_id: "example_company_id",
     uid: "example_uid",
     display_type: "Stop",
+    location_id: "example_location",
     domain: "example_domain",
+    threshold_type: "",
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -88,7 +96,9 @@ const Tools = () => {
     type: null,
     company_id: "example_company_id",
     uid: "example_uid",
+    location_id: "example_location",
     domain: "example_domain",
+    threshold_type: "",
   });
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -342,8 +352,8 @@ const Tools = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Threshold Type"
-                    name="thresholdType"
-                    value={enter.thresholdType}
+                    name="threshold_type"
+                    value={enter.threshold_type}
                     onChange={handleEnterChange}
                   >
                     <MenuItem value={"utilization"}>Utilization</MenuItem>
@@ -505,9 +515,9 @@ const Tools = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Threshold Type"
-                    name="thresholdType"
-                    value={warning.thresholdType}
-                    onChange={handleEnterChange}
+                    name="threshold_type"
+                    value={warning.threshold_type}
+                    onChange={handleWarningChange}
                   >
                     <MenuItem value={"utilization"}>Utilization</MenuItem>
                     <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
@@ -668,9 +678,9 @@ const Tools = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Threshold Type"
-                    name="thresholdType"
-                    value={warning.thresholdType}
-                    onChange={handleEnterChange}
+                    name="threshold_type"
+                    value={stop.threshold_type}
+                    onChange={handleStopChange}
                   >
                     <MenuItem value={"utilization"}>Utilization</MenuItem>
                     <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
