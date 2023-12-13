@@ -71,9 +71,14 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
                 sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
               />
             )}
-            {type && (
+            {type === "utilization" && (
               <Typography sx={{ color: "white", fontSize: "15vh" }}>
-                {type}
+                {threshold} %
+              </Typography>
+            )}
+            {type === "occupancy" && (
+              <Typography sx={{ color: "white", fontSize: "15vh" }}>
+                {threshold}
               </Typography>
             )}
           </Grid>

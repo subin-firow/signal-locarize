@@ -250,6 +250,7 @@ const Tools = () => {
                     value={enter.icon}
                     onChange={handleEnterChange}
                   >
+                    <MenuItem value={"none"}>none</MenuItem>
                     <MenuItem value={"success"}>
                       <ThumbUpOffAltIcon />
                     </MenuItem>
@@ -392,6 +393,7 @@ const Tools = () => {
                     value={warning.icon}
                     onChange={handleWarningChange}
                   >
+                    <MenuItem value={"none"}>none</MenuItem>
                     <MenuItem value={"success"}>
                       <ThumbUpOffAltIcon />
                     </MenuItem>
@@ -534,6 +536,7 @@ const Tools = () => {
                     value={stop.icon}
                     onChange={handleStopChange}
                   >
+                    <MenuItem value={"none"}>none</MenuItem>
                     <MenuItem value={"success"}>
                       <ThumbUpOffAltIcon />
                     </MenuItem>
@@ -578,7 +581,7 @@ const Tools = () => {
           </AccordionDetails>
         </Accordion>
       </Grid>
-      <Grid xs={12} md={8} padding={2} height={'80vh'}>
+      <Grid xs={12} md={8} padding={2} height={"80vh"}>
         <Demo
           title={activeItem?.title}
           subTitle={activeItem?.subTitle}
