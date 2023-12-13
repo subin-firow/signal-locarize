@@ -14,8 +14,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import { styled } from "@mui/system";
 
-const Preview = ({title , subTitle, color, Icon, progress, type}) => {
-
+const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
   const GlassmorphicGrid = styled(Grid)({
     background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
@@ -31,8 +30,7 @@ const Preview = ({title , subTitle, color, Icon, progress, type}) => {
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
-      backgroundColor:
-        theme.palette.mode === "light" ? `${color}` : "#308fe8",
+      backgroundColor: theme.palette.mode === "light" ? `${color}` : "#308fe8",
     },
   }));
 
@@ -44,6 +42,7 @@ const Preview = ({title , subTitle, color, Icon, progress, type}) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        transitionDuration: 300,
       }}
     >
       <Container sx={{ padding: 6 }}>
@@ -59,35 +58,59 @@ const Preview = ({title , subTitle, color, Icon, progress, type}) => {
           >
             {Icon === "success" && (
               <ThumbUpOffAltIcon
-                sx={{ color: "white", fontSize: {xs:"15vh" , sm:"25vh", md:"35vh"}, marginBottom: 2 }}
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
+                  marginBottom: 2,
+                }}
               />
             )}
             {Icon === "warning" && (
               <WarningAmberIcon
-                sx={{ color: "white", fontSize: {xs:"15vh" , sm:"25vh", md:"35vh"}, marginBottom: 2 }}
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
+                  marginBottom: 2,
+                }}
               />
             )}
             {Icon === "stop" && (
               <PanToolIcon
-                sx={{ color: "white", fontSize: {xs:"15vh" , sm:"25vh", md:"35vh"}, marginBottom: 2 }}
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
+                  marginBottom: 2,
+                }}
               />
             )}
             {type === "utilization" && (
-              <Typography sx={{ color: "white", fontSize: {xs:"5vh", sm:"10vh", md:"15vh"} }}>
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "5vh", sm: "10vh", md: "15vh" },
+                }}
+              >
                 {progress} %
               </Typography>
             )}
             {type === "occupancy" && (
-              <Typography sx={{ color: "white", fontSize: {xs:"5vh", sm:"10vh", md:"15vh"} }}>
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "5vh", sm: "10vh", md: "15vh" },
+                }}
+              >
                 {progress}
               </Typography>
             )}
           </Grid>
           <GlassmorphicGrid item xs={12}>
-            <BorderLinearProgress variant="determinate" value={progress} />
+            <Grid border={"solid white 6px"} borderRadius="12px">
+              <BorderLinearProgress variant="determinate" value={progress} />
+            </Grid>
             <Typography
               sx={{
-                fontSize: {xs:"4vh", sm:"7vh" , md:"10vh"},
+                fontSize: { xs: "4vh", sm: "7vh", md: "10vh" },
                 textTransform: "uppercase",
                 textAlign: "center",
                 fontWeight: 600,
@@ -98,9 +121,8 @@ const Preview = ({title , subTitle, color, Icon, progress, type}) => {
               {title}
             </Typography>
             <Typography
-              
               sx={{
-                fontSize: {xs:"2vh", sm:"4vh" , md:"5vh"},
+                fontSize: { xs: "2vh", sm: "4vh", md: "5vh" },
                 textTransform: "none",
                 textAlign: "center",
                 color: "white",

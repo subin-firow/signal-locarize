@@ -146,6 +146,7 @@ const Tools = () => {
   return (
     <Grid container spacing={2}>
       <Grid
+        item
         xs={12}
         paddingTop={1}
         display={"flex"}
@@ -164,18 +165,41 @@ const Tools = () => {
           Save
         </Button>
       </Grid>
-      <Grid xs={12} display={"flex"} justifyContent={"center"}>
-        <Button
+      <Grid
+        item
+        xs={12}
+        display={"flex"}
+        justifyContent={"start"}
+        padding={2}
+        paddingX={4}
+      >
+        <TextField
+          id="outlined-basic"
+          label="Enter API key"
           variant="outlined"
-          sx={{
-            backgroundColor: "lightgray",
-            margin: 2,
-            borderColor: "lightgray",
-            color: "black",
-          }}
-        >
-          Display
-        </Button>
+          name="iframe"
+          // value={enter.title}
+          // onChange={handleEnterChange}
+          sx={{ marginLeft: 2 }}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Maximum Number of people"
+          variant="outlined"
+          name="apiKey"
+          // value={enter.title}
+          // onChange={handleEnterChange}
+          sx={{ marginLeft: 2 }}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Domain"
+          variant="outlined"
+          name="domain"
+          // value={enter.title}
+          // onChange={handleEnterChange}
+          sx={{ marginLeft: 2 }}
+        />
       </Grid>
       <Grid xs={12} md={4} paddingX={4}>
         <Accordion
@@ -187,7 +211,7 @@ const Tools = () => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            sx={{ backgroundColor: "#5fd461" }}
+            sx={{ backgroundColor: "#68d391" }}
           >
             <Typography
               variant="h6"
@@ -196,7 +220,7 @@ const Tools = () => {
               Enter
             </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ border: `1px solid #5fd461` }}>
+          <AccordionDetails sx={{ border: `1px solid #68d391` }}>
             <Grid container xs={12} padding={2} spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -290,19 +314,39 @@ const Tools = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Display Style
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Type"
+                    label="Display Style"
                     name="type"
                     value={enter.type}
                     onChange={handleEnterChange}
                   >
                     <MenuItem value={"none"}>None</MenuItem>
-                    <MenuItem value={"utilization"}>Utilization %</MenuItem>
+                    <MenuItem value={"utilization"}>Utilization</MenuItem>
+                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Threshold Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Threshold Type"
+                    name="thresholdType"
+                    value={enter.thresholdType}
+                    onChange={handleEnterChange}
+                  >
+                    <MenuItem value={"utilization"}>Utilization</MenuItem>
                     <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
                   </Select>
                 </FormControl>
@@ -311,7 +355,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Threshold"
+                  label="Threshold Value"
                   variant="outlined"
                   name="threshold"
                   value={enter.threshold}
@@ -433,13 +477,15 @@ const Tools = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Display Style
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="type"
+                    label="Display Style"
                     name="type"
                     value={warning.type}
                     onChange={handleWarningChange}
@@ -451,10 +497,28 @@ const Tools = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Threshold Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Threshold Type"
+                    name="thresholdType"
+                    value={warning.thresholdType}
+                    onChange={handleEnterChange}
+                  >
+                    <MenuItem value={"utilization"}>Utilization</MenuItem>
+                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Threshold"
+                  label="Threshold Value"
                   variant="outlined"
                   name="threshold"
                   value={warning.threshold}
@@ -576,13 +640,15 @@ const Tools = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Display Style
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Type"
+                    label="Display Style"
                     name="type"
                     value={stop.type}
                     onChange={handleStopChange}
@@ -594,10 +660,28 @@ const Tools = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Threshold Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Threshold Type"
+                    name="thresholdType"
+                    value={warning.thresholdType}
+                    onChange={handleEnterChange}
+                  >
+                    <MenuItem value={"utilization"}>Utilization</MenuItem>
+                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Threshold"
+                  label="Threshold Value"
                   variant="outlined"
                   name="threshold"
                   value={stop.threshold}

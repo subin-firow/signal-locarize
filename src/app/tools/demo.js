@@ -82,8 +82,11 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
               </Typography>
             )}
           </Grid>
-          <GlassmorphicGrid item xs={12} marginBottom={4}>
+          <GlassmorphicGrid item xs={12}  marginBottom={4}>
+            <Grid border={'solid white 6px'}  borderRadius="12px">
             <BorderLinearProgress variant="determinate" value={threshold} />
+
+            </Grid>
             <Typography
               variant="h2"
               sx={{
