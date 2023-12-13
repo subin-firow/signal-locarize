@@ -52,37 +52,42 @@ const Preview = ({title , subTitle, color, Icon, progress, type}) => {
             item
             xs={12}
             sx={{
-              display: { md: "flex" },
+              display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
             {Icon === "success" && (
               <ThumbUpOffAltIcon
-                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+                sx={{ color: "white", fontSize: {xs:"15vh" , sm:"25vh", md:"35vh"}, marginBottom: 2 }}
               />
             )}
             {Icon === "warning" && (
               <WarningAmberIcon
-                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+                sx={{ color: "white", fontSize: {xs:"15vh" , sm:"25vh", md:"35vh"}, marginBottom: 2 }}
+              />
+            )}
+            {Icon === "stop" && (
+              <PanToolIcon
+                sx={{ color: "white", fontSize: {xs:"15vh" , sm:"25vh", md:"35vh"}, marginBottom: 2 }}
               />
             )}
             {type === "utilization" && (
-              <Typography sx={{ color: "white", fontSize: "15vh" }}>
-                {threshold} %
+              <Typography sx={{ color: "white", fontSize: {xs:"5vh", sm:"10vh", md:"15vh"} }}>
+                {progress} %
               </Typography>
             )}
             {type === "occupancy" && (
-              <Typography sx={{ color: "white", fontSize: "15vh" }}>
-                {threshold}
+              <Typography sx={{ color: "white", fontSize: {xs:"5vh", sm:"10vh", md:"15vh"} }}>
+                {progress}
               </Typography>
             )}
           </Grid>
           <GlassmorphicGrid item xs={12}>
             <BorderLinearProgress variant="determinate" value={progress} />
             <Typography
-              variant="h2"
               sx={{
+                fontSize: {xs:"4vh", sm:"7vh" , md:"10vh"},
                 textTransform: "uppercase",
                 textAlign: "center",
                 fontWeight: 600,
@@ -93,8 +98,9 @@ const Preview = ({title , subTitle, color, Icon, progress, type}) => {
               {title}
             </Typography>
             <Typography
-              variant="h5"
+              
               sx={{
+                fontSize: {xs:"2vh", sm:"4vh" , md:"5vh"},
                 textTransform: "none",
                 textAlign: "center",
                 color: "white",

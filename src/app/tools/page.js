@@ -135,6 +135,12 @@ const Tools = () => {
     Save(enter)
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
+    Save(warning)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+    Save(stop)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
   };
 
   return (
