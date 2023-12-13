@@ -21,15 +21,24 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Demo from "./demo";
+import { Save } from "@/services/index.service";
 
 const Tools = () => {
+  const generateId = () => {
+    return Math.random().toString(36).substring(2);
+  };
+
   let formData = {
     threshold: 10,
     color: "#68d391",
     icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
-    type: null,
+    type: "none",
+    company_id: "example_company_id",
+    uid: "example_uid",
+    display_type: "Enter",
+    domain: "example_domain",
   };
 
   const [enter, setEnter] = useState({
@@ -38,7 +47,11 @@ const Tools = () => {
     icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
-    type: null,
+    type: "none",
+    company_id: "example_company_id",
+    uid: "example_uid",
+    display_type: "Enter",
+    domain: "example_domain",
   });
   const [warning, setWarning] = useState({
     threshold: 10,
@@ -46,7 +59,11 @@ const Tools = () => {
     icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
-    type: null,
+    type: "none",
+    company_id: "example_company_id",
+    uid: "example_uid",
+    display_type: "Warning",
+    domain: "example_domain",
   });
   const [stop, setStop] = useState({
     threshold: 10,
@@ -54,7 +71,11 @@ const Tools = () => {
     icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
-    type: null,
+    type: "none",
+    company_id: "example_company_id",
+    uid: "example_uid",
+    display_type: "Stop",
+    domain: "example_domain",
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -65,6 +86,9 @@ const Tools = () => {
     title: "Enter Here",
     subTitle: "Please enter text here",
     type: null,
+    company_id: "example_company_id",
+    uid: "example_uid",
+    domain: "example_domain",
   });
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -108,12 +132,9 @@ const Tools = () => {
   };
 
   const onSave = () => {
-    console.log(
-      "🚀 ~ file: page.js:57 ~ onSave ~ onSave:",
-      enter,
-      warning,
-      stop
-    );
+    Save(enter)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
   };
 
   return (

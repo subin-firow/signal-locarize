@@ -14,33 +14,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import { styled } from "@mui/system";
 
-const Preview = () => {
-  const data = {
-    // success
-
-    title: "Welcome",
-    subTitle: "Please do not enter the store at the moment",
-    color: "#5fd461",
-    Icon: ThumbUpOffAltIcon,
-    progress: 50,
-    utilization: "2.5%",
-
-    //warning
-
-    // title: "Attention",
-    // subTitle: "One person per minute",
-    // color: "#d6cf49",
-    // Icon: WarningAmberIcon,
-    // progress: 50,
-
-    //stop
-
-    // title: "Stop",
-    // subTitle: "Please do not enter the store at the moment",
-    // color: "#b95858",
-    // Icon: PanToolIcon,
-    // progress: 50,
-  };
+const Preview = ({title , subTitle, color, Icon, progress, type}) => {
 
   const GlassmorphicGrid = styled(Grid)({
     background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
@@ -58,15 +32,18 @@ const Preview = () => {
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
       backgroundColor:
-        theme.palette.mode === "light" ? `${data.color}` : "#308fe8",
+        theme.palette.mode === "light" ? `${color}` : "#308fe8",
     },
   }));
 
   return (
     <Box
       sx={{
-        backgroundColor: data.color,
-        minHeight: "100%",
+        backgroundColor: color,
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Container sx={{ padding: 6 }}>
@@ -80,17 +57,29 @@ const Preview = () => {
               alignItems: "center",
             }}
           >
-            <data.Icon
-              sx={{ color: "white", fontSize: "55vh", marginBottom: 2 }}
-            />
-            {data?.utilization && (
-              <Typography sx={{ color: "white", fontSize: "35vh" }}>
-                {data?.utilization}
+            {Icon === "success" && (
+              <ThumbUpOffAltIcon
+                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              />
+            )}
+            {Icon === "warning" && (
+              <WarningAmberIcon
+                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              />
+            )}
+            {type === "utilization" && (
+              <Typography sx={{ color: "white", fontSize: "15vh" }}>
+                {threshold} %
+              </Typography>
+            )}
+            {type === "occupancy" && (
+              <Typography sx={{ color: "white", fontSize: "15vh" }}>
+                {threshold}
               </Typography>
             )}
           </Grid>
           <GlassmorphicGrid item xs={12}>
-            <BorderLinearProgress variant="determinate" value={data.progress} />
+            <BorderLinearProgress variant="determinate" value={progress} />
             <Typography
               variant="h2"
               sx={{
@@ -101,7 +90,7 @@ const Preview = () => {
                 padding: 2,
               }}
             >
-              {data.title}
+              {title}
             </Typography>
             <Typography
               variant="h5"
@@ -112,7 +101,7 @@ const Preview = () => {
                 padding: 2,
               }}
             >
-              {data.subTitle}
+              {subTitle}
             </Typography>
           </GlassmorphicGrid>
         </Grid>
