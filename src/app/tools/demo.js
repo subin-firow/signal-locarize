@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { styled } from "@mui/system";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import PanToolIcon from "@mui/icons-material/PanTool";
 
 const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
-  console.log("🚀 ~ file: demo.js:16 ~ Demo ~ subtitle:", subTitle)
-  const Icon = icon ? icon : ThumbUpOffAltIcon;
   const GlassmorphicGrid = styled(Grid)({
     background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
@@ -30,8 +30,7 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
-      backgroundColor:
-        theme.palette.mode === "light" ? `${color}` : "#308fe8",
+      backgroundColor: theme.palette.mode === "light" ? `${color}` : "#308fe8",
     },
   }));
 
@@ -41,9 +40,9 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
         backgroundColor: color,
         minHeight: "80vh",
         borderRadius: "8px",
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center'
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Container>
@@ -52,19 +51,33 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
             item
             xs={12}
             sx={{
-              display: "flex" ,
+              display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {icon && <Icon sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }} />}
+            {icon === "success" && (
+              <ThumbUpOffAltIcon
+                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              />
+            )}
+            {icon === "warning" && (
+              <WarningAmberIcon
+                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              />
+            )}
+            {icon === "stop" && (
+              <PanToolIcon
+                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              />
+            )}
             {type && (
               <Typography sx={{ color: "white", fontSize: "15vh" }}>
                 {type}
               </Typography>
             )}
           </Grid>
-          <GlassmorphicGrid item xs={12}  marginBottom={4}>
+          <GlassmorphicGrid item xs={12} marginBottom={4}>
             <BorderLinearProgress variant="determinate" value={threshold} />
             <Typography
               variant="h2"

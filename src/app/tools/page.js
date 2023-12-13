@@ -26,7 +26,7 @@ const Tools = () => {
   let formData = {
     threshold: 10,
     color: "#68d391",
-    icon: ThumbUpOffAltIcon,
+    icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
     type: null,
@@ -35,7 +35,7 @@ const Tools = () => {
   const [enter, setEnter] = useState({
     threshold: 10,
     color: "#68d391",
-    icon: ThumbUpOffAltIcon,
+    icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
     type: null,
@@ -43,7 +43,7 @@ const Tools = () => {
   const [warning, setWarning] = useState({
     threshold: 10,
     color: "#f6e05e",
-    icon: ThumbUpOffAltIcon,
+    icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
     type: null,
@@ -51,7 +51,7 @@ const Tools = () => {
   const [stop, setStop] = useState({
     threshold: 10,
     color: "#fc8181",
-    icon: ThumbUpOffAltIcon,
+    icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
     type: null,
@@ -61,7 +61,7 @@ const Tools = () => {
   const [activeItem, setActiveItem] = useState({
     threshold: 10,
     color: "#68d391",
-    icon: ThumbUpOffAltIcon,
+    icon: "ThumbUpOffAltIcon",
     title: "Enter Here",
     subTitle: "Please enter text here",
     type: null,
@@ -137,7 +137,7 @@ const Tools = () => {
           Save
         </Button>
       </Grid>
-      <Grid xs={12} paddingTop={1} display={"flex"} justifyContent={"center"}>
+      <Grid xs={12} display={"flex"} justifyContent={"center"}>
         <Button
           variant="outlined"
           sx={{
@@ -250,13 +250,13 @@ const Tools = () => {
                     value={enter.icon}
                     onChange={handleEnterChange}
                   >
-                    <MenuItem value={"ThumbUpOffAltIcon"}>
+                    <MenuItem value={"success"}>
                       <ThumbUpOffAltIcon />
                     </MenuItem>
-                    <MenuItem value={"WarningAmberIcon"}>
+                    <MenuItem value={"warning"}>
                       <WarningAmberIcon />
                     </MenuItem>
-                    <MenuItem value={"PanToolIcon"}>
+                    <MenuItem value={"stop"}>
                       <PanToolIcon />
                     </MenuItem>
                   </Select>
@@ -392,13 +392,13 @@ const Tools = () => {
                     value={warning.icon}
                     onChange={handleWarningChange}
                   >
-                    <MenuItem value={"ThumbUpOffAltIcon"}>
+                    <MenuItem value={"success"}>
                       <ThumbUpOffAltIcon />
                     </MenuItem>
-                    <MenuItem value={"WarningAmberIcon"}>
+                    <MenuItem value={"warning"}>
                       <WarningAmberIcon />
                     </MenuItem>
-                    <MenuItem value={"PanToolIcon"}>
+                    <MenuItem value={"stop"}>
                       <PanToolIcon />
                     </MenuItem>
                   </Select>
@@ -534,13 +534,13 @@ const Tools = () => {
                     value={stop.icon}
                     onChange={handleStopChange}
                   >
-                    <MenuItem value={"ThumbUpOffAltIcon"}>
+                    <MenuItem value={"success"}>
                       <ThumbUpOffAltIcon />
                     </MenuItem>
-                    <MenuItem value={"WarningAmberIcon"}>
+                    <MenuItem value={"warning"}>
                       <WarningAmberIcon />
                     </MenuItem>
-                    <MenuItem value={"PanToolIcon"}>
+                    <MenuItem value={"stop"}>
                       <PanToolIcon />
                     </MenuItem>
                   </Select>
@@ -578,7 +578,7 @@ const Tools = () => {
           </AccordionDetails>
         </Accordion>
       </Grid>
-      <Grid xs={12} md={8} padding={4} height={'80vh'}>
+      <Grid xs={12} md={8} padding={2} height={'80vh'}>
         <Demo
           title={activeItem?.title}
           subTitle={activeItem?.subTitle}
