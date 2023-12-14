@@ -22,26 +22,9 @@ import PanToolIcon from "@mui/icons-material/PanTool";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Demo from "./demo";
 import { Save } from "@/services/index.service";
+import toast, { Toaster } from "react-hot-toast";
 
 const Tools = () => {
-  const generateId = () => {
-    return Math.random().toString(36).substring(2);
-  };
-
-  let formData = {
-    threshold: 10,
-    color: "#68d391",
-    icon: "ThumbUpOffAltIcon",
-    title: "Enter Here",
-    subTitle: "Please enter text here",
-    type: "none",
-    company_id: "example_company_id",
-    uid: "example_uid",
-    display_type: "Enter",
-    location_id: "example_location",
-    domain: "example_domain",
-    threshold_type: "",
-  };
 
   const [enter, setEnter] = useState({
     threshold: 10,
@@ -55,7 +38,9 @@ const Tools = () => {
     display_type: "Enter",
     location_id: "example_location",
     domain: "example_domain",
-    threshold_type: "",
+    threshold_type: "example_threshold",
+    apiKey: "apiKey",
+    max_people_count: 0
   });
   const [warning, setWarning] = useState({
     threshold: 10,
@@ -69,7 +54,9 @@ const Tools = () => {
     display_type: "Warning",
     location_id: "example_location",
     domain: "example_domain",
-    threshold_type: "",
+    threshold_type: "example_threshold",
+    apiKey: "apiKey",
+    max_people_count: 0
   });
   const [stop, setStop] = useState({
     threshold: 10,
@@ -83,7 +70,9 @@ const Tools = () => {
     display_type: "Stop",
     location_id: "example_location",
     domain: "example_domain",
-    threshold_type: "",
+    threshold_type: "example_threshold",
+    apiKey: "apiKey",
+    max_people_count: 0
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -98,7 +87,9 @@ const Tools = () => {
     uid: "example_uid",
     location_id: "example_location",
     domain: "example_domain",
-    threshold_type: "",
+    threshold_type: "example_threshold",
+    apiKey: "apiKey",
+    max_people_count: 0
   });
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -141,6 +132,16 @@ const Tools = () => {
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setEnter((prevData) => ({ ...prevData, [name]: value }));
+    setWarning((prevData) => ({ ...prevData, [name]: value }));
+    setStop((prevData) => ({ ...prevData, [name]: value }));
+
+    setActiveItem((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   const onSave = () => {
     Save(enter)
       .then((res) => console.log(res))
@@ -149,12 +150,13 @@ const Tools = () => {
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
     Save(stop)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+      .then((res) => toast.success("Updated Successfully!"))
+      .catch((error) => toast.error("Something Went Wrong"));
   };
 
   return (
     <Grid container spacing={2}>
+      <Toaster position="top-center" reverseOrder={false} />
       <Grid
         item
         xs={12}
@@ -187,18 +189,19 @@ const Tools = () => {
           id="outlined-basic"
           label="Enter API key"
           variant="outlined"
-          name="iframe"
-          // value={enter.title}
-          // onChange={handleEnterChange}
+          name="apiKey"
+          value={enter.apiKey}
+          onChange={handleChange}
           sx={{ marginLeft: 2 }}
         />
         <TextField
           id="outlined-basic"
           label="Maximum Number of people"
+          type="numeric"
           variant="outlined"
-          name="apiKey"
-          // value={enter.title}
-          // onChange={handleEnterChange}
+          name="max_people_count"
+          value={enter.max_people_count}
+          onChange={handleChange}
           sx={{ marginLeft: 2 }}
         />
         <TextField
@@ -206,8 +209,8 @@ const Tools = () => {
           label="Domain"
           variant="outlined"
           name="domain"
-          // value={enter.title}
-          // onChange={handleEnterChange}
+          value={enter.domain}
+          onChange={handleChange}
           sx={{ marginLeft: 2 }}
         />
       </Grid>

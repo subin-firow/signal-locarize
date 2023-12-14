@@ -105,7 +105,7 @@ const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
             )}
           </Grid>
           <GlassmorphicGrid item xs={12}>
-            <Grid border={"solid white 6px"} borderRadius="12px">
+            <Grid border={"solid white 2px"} borderRadius="8px">
               <BorderLinearProgress variant="determinate" value={progress} />
             </Grid>
             <Typography
