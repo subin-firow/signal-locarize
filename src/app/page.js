@@ -18,9 +18,9 @@ const HomePage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5008/v1/random-live-number"
+          `http://localhost:5008/v2/example_company_id/example_location`
         );
-        setCount(response.data.number);
+        setCount(response.data.count);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -36,7 +36,7 @@ const HomePage = () => {
 
   useEffect(() => {
     setLoading(true);
-    GetData("example_company_id")
+    GetData("example_company_id", "example_location")
       .then((res) => {
         setData(res?.data?.enter);
         setEnter(res?.data?.enter);
