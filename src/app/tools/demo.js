@@ -45,8 +45,8 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
         alignItems: "center",
       }}
     >
-      <Container>
-        <Grid container>
+      <Container> 
+        <Grid container> 
           <Grid
             item
             xs={12}
@@ -86,7 +86,7 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
             <Grid border={'solid white 6px'}  borderRadius="12px">
             <BorderLinearProgress variant="determinate" value={threshold} />
 
-            </Grid>
+            </Grid> 
             <Typography
               variant="h2"
               sx={{
