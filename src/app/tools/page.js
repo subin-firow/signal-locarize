@@ -25,7 +25,6 @@ import { Save } from "@/services/index.service";
 import toast, { Toaster } from "react-hot-toast";
 
 const Tools = () => {
-
   const [enter, setEnter] = useState({
     threshold: 10,
     color: "#68d391",
@@ -40,7 +39,7 @@ const Tools = () => {
     domain: "example_domain",
     threshold_type: "example_threshold",
     apiKey: "apiKey",
-    max_people_count: 0
+    max_people_count: 0,
   });
   const [warning, setWarning] = useState({
     threshold: 10,
@@ -56,7 +55,7 @@ const Tools = () => {
     domain: "example_domain",
     threshold_type: "example_threshold",
     apiKey: "apiKey",
-    max_people_count: 0
+    max_people_count: 0,
   });
   const [stop, setStop] = useState({
     threshold: 10,
@@ -72,7 +71,7 @@ const Tools = () => {
     domain: "example_domain",
     threshold_type: "example_threshold",
     apiKey: "apiKey",
-    max_people_count: 0
+    max_people_count: 0,
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -89,7 +88,7 @@ const Tools = () => {
     domain: "example_domain",
     threshold_type: "example_threshold",
     apiKey: "apiKey",
-    max_people_count: 0
+    max_people_count: 0,
   });
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -144,14 +143,16 @@ const Tools = () => {
 
   const onSave = () => {
     Save(enter)
-      .then((res) => console.log(res))
+      .then((res) => {
+        Save(warning)
+          .then((res) => {
+            Save(stop)
+              .then((res) => toast.success("Updated Successfully!"))
+              .catch((error) => toast.error("Something Went Wrong"));
+          })
+          .catch((error) => console.log(error));
+      })
       .catch((error) => console.log(error));
-    Save(warning)
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
-    Save(stop)
-      .then((res) => toast.success("Updated Successfully!"))
-      .catch((error) => toast.error("Something Went Wrong"));
   };
 
   return (
