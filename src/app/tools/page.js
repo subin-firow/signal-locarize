@@ -23,6 +23,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Demo from "./demo";
 import { Save } from "@/services/index.service";
 import toast, { Toaster } from "react-hot-toast";
+import IconButton from "@mui/material/IconButton";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import Tooltip from "@mui/material/Tooltip";
 
 const Tools = () => {
   const [enter, setEnter] = useState({
@@ -141,18 +144,42 @@ const Tools = () => {
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const onSave = () => {
-    Save(enter)
-      .then((res) => {
-        Save(warning)
-          .then((res) => {
-            Save(stop)
-              .then((res) => toast.success("Updated Successfully!"))
-              .catch((error) => toast.error("Something Went Wrong"));
-          })
-          .catch((error) => console.log(error));
-      })
-      .catch((error) => console.log(error));
+  const onSave = async () => {
+    try {
+      await Save(enter);
+      await Save(warning);
+      await Save(stop);
+      toast.success("Updated Successfully!");
+    } catch (error) {
+      toast.error("Something Went Wrong");
+      console.log(error);
+    }
+  };
+
+  const ReadOnlyTextField = ({ value }) => {
+    const handleCopyClick = () => {
+      // Copy the value to the clipboard
+      navigator.clipboard.writeText(value);
+    };
+
+    return (
+      <Tooltip title={value} placement="top">
+        <TextField
+          value={value}
+          variant="outlined"
+          label="Output"
+          InputProps={{
+            readOnly: true,
+            endAdornment: (
+              <IconButton onClick={handleCopyClick} edge="end">
+                <FileCopyIcon sx={{color:"#68d391"}}/>
+              </IconButton>
+            ),
+          }}
+          sx={{ml:2, width:"20%"}}
+        />
+      </Tooltip>
+    );
   };
 
   return (
@@ -167,13 +194,12 @@ const Tools = () => {
         sx={{ backgroundColor: "#68d391" }}
       >
         <Button
-          variant="outlined"
+          variant="text"
           sx={{
             margin: 2,
             borderColor: "lightgray",
-            color: "white",
+            color: "transparent",
           }}
-          onClick={onSave}
         >
           Save
         </Button>
@@ -213,6 +239,11 @@ const Tools = () => {
           value={enter.domain}
           onChange={handleChange}
           sx={{ marginLeft: 2 }}
+        />
+        <ReadOnlyTextField
+          value={
+            '<iframe src="http://3.109.149.185:3000/" width="400" height="350" frameborder="0" allowfullscreen></iframe>'
+          }
         />
       </Grid>
       <Grid xs={12} md={4} paddingX={4}>
@@ -705,6 +736,22 @@ const Tools = () => {
             </Grid>
           </AccordionDetails>
         </Accordion>
+        <Box width={"100%"} sx={{ display: "flex", justifyContent: "end" }}>
+          <Button
+            variant="contained"
+            sx={{
+              borderColor: "lightgray",
+              width: "30%",
+              backgroundColor: "#68d391",
+              "&:hover": {
+                backgroundColor: "#68d391", // Change this to your desired hovering background color
+              },
+            }}
+            onClick={onSave}
+          >
+            Save
+          </Button>
+        </Box>
       </Grid>
       <Grid xs={12} md={8} padding={2} height={"80vh"}>
         <Demo
