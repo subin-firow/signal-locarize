@@ -26,6 +26,9 @@ import toast, { Toaster } from "react-hot-toast";
 import IconButton from "@mui/material/IconButton";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import Tooltip from "@mui/material/Tooltip";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import { motion } from "framer-motion";
 
 const Tools = () => {
   const [enter, setEnter] = useState({
@@ -78,6 +81,7 @@ const Tools = () => {
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
+  const [openTools, setOpenTools] = useState(false);
   const [activeItem, setActiveItem] = useState({
     threshold: 10,
     color: "#68d391",
@@ -172,11 +176,11 @@ const Tools = () => {
             readOnly: true,
             endAdornment: (
               <IconButton onClick={handleCopyClick} edge="end">
-                <FileCopyIcon sx={{color:"#68d391"}}/>
+                <FileCopyIcon sx={{ color: "#68d391" }} />
               </IconButton>
             ),
           }}
-          sx={{ml:2, width:"20%"}}
+          sx={{ ml: 2, width: "20%" }}
         />
       </Tooltip>
     );
@@ -212,39 +216,57 @@ const Tools = () => {
         padding={2}
         paddingX={4}
       >
-        <TextField
-          id="outlined-basic"
-          label="Enter API key"
-          variant="outlined"
-          name="apiKey"
-          value={enter.apiKey}
-          onChange={handleChange}
-          sx={{ marginLeft: 2 }}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Maximum Number of people"
-          type="numeric"
-          variant="outlined"
-          name="max_people_count"
-          value={enter.max_people_count}
-          onChange={handleChange}
-          sx={{ marginLeft: 2 }}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Domain"
-          variant="outlined"
-          name="domain"
-          value={enter.domain}
-          onChange={handleChange}
-          sx={{ marginLeft: 2 }}
-        />
-        <ReadOnlyTextField
-          value={
-            '<iframe src="http://3.109.149.185:3000/" width="400" height="350" frameborder="0" allowfullscreen></iframe>'
-          }
-        />
+        <motion.div
+          style={{ display: "flex" }}
+          initial={{ width: 0, opacity: 0 }}
+          animate={{
+            opacity: openTools ?1:0,
+            width: openTools ? "100%" : 0,
+            transition: { duration: 0.5 },
+          }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Enter API key"
+            variant="outlined"
+            name="apiKey"
+            value={enter.apiKey}
+            onChange={handleChange}
+            sx={{ marginLeft: 2 }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Maximum Number of people"
+            type="numeric"
+            variant="outlined"
+            name="max_people_count"
+            value={enter.max_people_count}
+            onChange={handleChange}
+            sx={{ marginLeft: 2 }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Domain"
+            variant="outlined"
+            name="domain"
+            value={enter.domain}
+            onChange={handleChange}
+            sx={{ marginLeft: 2 }}
+          />
+          <ReadOnlyTextField
+            value={
+              '<iframe src="http://3.109.149.185:3000/" width="400" height="350" frameborder="0" allowfullscreen></iframe>'
+            }
+          />
+        </motion.div>
+
+        <IconButton
+          onClick={() => setOpenTools(!openTools)}
+          sx={{ marginLeft: 2, borderRadius: 1 }}
+        >
+          {openTools && <KeyboardDoubleArrowLeftIcon />}
+          {!openTools && <KeyboardDoubleArrowRightIcon />}
+        </IconButton>
       </Grid>
       <Grid xs={12} md={4} paddingX={4}>
         <Accordion
