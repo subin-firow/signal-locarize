@@ -13,6 +13,7 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import { styled } from "@mui/system";
+import Image from "next/image";
 
 const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
   const GlassmorphicGrid = styled(Grid)({
@@ -57,30 +58,54 @@ const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
             }}
           >
             {Icon === "success" && (
-              <ThumbUpOffAltIcon
-                sx={{
-                  color: "white",
-                  fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
-                  marginBottom: 2,
-                }}
+              // <ThumbUpOffAltIcon
+              //   sx={{
+              //     color: "white",
+              //     fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
+              //     marginBottom: 2,
+              //   }}
+              // />
+
+              <Image
+                src={"/Images/aomaru_30.png"}
+                width={300}
+                height={300}
+                alt=""
+                style={{ marginBottom: "20px" }}
               />
             )}
             {Icon === "warning" && (
-              <WarningAmberIcon
-                sx={{
-                  color: "white",
-                  fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
-                  marginBottom: 2,
-                }}
+              // <WarningAmberIcon
+              //   sx={{
+              //     color: "white",
+              //     fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
+              //     marginBottom: 2,
+              //   }}
+              // />
+
+              <Image
+                src={"/Images/aomaru_16.png"}
+                width={300}
+                height={300}
+                alt=""
+                style={{ marginBottom: "20px" }}
               />
             )}
             {Icon === "stop" && (
-              <PanToolIcon
-                sx={{
-                  color: "white",
-                  fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
-                  marginBottom: 2,
-                }}
+              // <PanToolIcon
+              //   sx={{
+              //     color: "white",
+              //     fontSize: { xs: "15vh", sm: "25vh", md: "35vh" },
+              //     marginBottom: 2,
+              //   }}
+              // />
+
+              <Image
+                src={"/Images/aomaru_59.png"}
+                width={300}
+                height={300}
+                alt=""
+                style={{ marginBottom: "20px" }}
               />
             )}
             {type === "utilization" && (

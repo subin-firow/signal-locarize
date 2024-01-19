@@ -13,6 +13,7 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { styled } from "@mui/system";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PanToolIcon from "@mui/icons-material/PanTool";
+import Image from "next/image";
 
 const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
   const GlassmorphicGrid = styled(Grid)({
@@ -57,18 +58,42 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
             }}
           >
             {icon === "success" && (
-              <ThumbUpOffAltIcon
-                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              // <ThumbUpOffAltIcon
+              //   sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              // />
+
+              <Image
+                src={"/Images/aomaru_30.png"}
+                width={300}
+                height={300}
+                alt=""
+                style={{ marginBottom: "20px" }}
               />
             )}
             {icon === "warning" && (
-              <WarningAmberIcon
-                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              // <WarningAmberIcon
+              //   sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              // />
+
+              <Image
+                src={"/Images/aomaru_16.png"}
+                width={300}
+                height={300}
+                alt=""
+                style={{ marginBottom: "20px" }}
               />
             )}
             {icon === "stop" && (
-              <PanToolIcon
-                sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              // <PanToolIcon
+              //   sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
+              // />
+
+              <Image
+                src={"/Images/aomaru_59.png"}
+                width={300}
+                height={300}
+                alt=""
+                style={{ marginBottom: "20px" }}
               />
             )}
             {type === "utilization" && (
@@ -82,10 +107,9 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
               </Typography>
             )}
           </Grid>
-          <GlassmorphicGrid item xs={12}  marginBottom={4}>
-            <Grid border={'solid white 6px'}  borderRadius="12px">
-            <BorderLinearProgress variant="determinate" value={threshold} />
-
+          <GlassmorphicGrid item xs={12} marginBottom={4}>
+            <Grid border={"solid white 6px"} borderRadius="12px">
+              <BorderLinearProgress variant="determinate" value={threshold} />
             </Grid>
             <Typography
               variant="h2"
