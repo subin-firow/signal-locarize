@@ -16,7 +16,7 @@ import { CustomToast } from "./toast";
 
 export default function page() {
   const [details, setDetails] = useState(null);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setDetails((prevData) => ({
@@ -27,20 +27,26 @@ export default function page() {
   const handleCreate = () => {
     console.log(details);
 
-    setLoading(true)
-    toast.loading('Adding Account')
+    setLoading(true);
+    toast.loading("Adding Account");
 
-    axios.post(`http://localhost:5008/v1/create-account`,details).then((res)=>{
-        console.log(res.data)
-        setLoading(false)
+    axios
+      .post(`http://localhost:5008/v1/create-account`, details)
+      .then((res) => {
+        console.log(res.data);
+        setLoading(false);
+        toast.dismiss();
         toast((t) => (
-            <CustomToast type="success" message="Account added successfully" />
-          ));
-    }).catch(e=>{
-        console.log(e)
-        setLoading(false)
-        toast.error(e?.response.data.message)
-    })
+          <CustomToast type="success" message="Account added successfully" />
+        ));
+        setDetails(null);
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.dismiss();
+        setLoading(false);
+        toast.error(e?.response.data.message);
+      });
   };
   return (
     <>
@@ -56,6 +62,7 @@ export default function page() {
                     fullWidth
                     label="Email"
                     name="email"
+                    value={details?.email}
                     type="email"
                   />
                   <TextField
@@ -63,6 +70,7 @@ export default function page() {
                     fullWidth
                     label="Password"
                     name="password"
+                    value={details?.password}
                     type="password"
                   />
                   <TextField
@@ -70,6 +78,7 @@ export default function page() {
                     fullWidth
                     label="Repeat Password"
                     name="re_password"
+                    value={details?.re_password}
                     type="password"
                   />
                   <TextField
@@ -77,6 +86,7 @@ export default function page() {
                     fullWidth
                     label="Company id"
                     name="company_id"
+                    value={details?.company_id}
                     type="text"
                   />
                   <TextField
@@ -84,6 +94,7 @@ export default function page() {
                     fullWidth
                     label="Location id"
                     name="location_id"
+                    value={details?.location_id}
                     type="text"
                   />
                   <TextField
@@ -92,12 +103,14 @@ export default function page() {
                     variant="standard"
                     label="Enter Access Code for creating data"
                     name="access_code"
+                    value={details?.access_code}
                     type="password"
                   />
                 </Grid>
 
                 <Grid container py={2} display={"flex"} justifyContent={"end"}>
-                  <LoadingButton loading={loading}
+                  <LoadingButton
+                    loading={loading}
                     onClick={handleCreate}
                     fullWidth
                     variant="outlined"
