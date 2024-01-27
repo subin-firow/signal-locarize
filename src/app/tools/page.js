@@ -23,14 +23,21 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Demo from "./demo";
 import { Save } from "@/services/index.service";
 import toast, { Toaster } from "react-hot-toast";
+import IconButton from "@mui/material/IconButton";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import Tooltip from "@mui/material/Tooltip";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 const Tools = () => {
   const [enter, setEnter] = useState({
     threshold: 10,
     color: "#68d391",
-    icon: "ThumbUpOffAltIcon",
-    title: "Enter Here",
-    subTitle: "Please enter text here",
+    icon: "/Images/aomaru_30.png",
+    title: "いらっしゃいませ",
+    subTitle: "入力してください",
     type: "none",
     company_id: "example_company_id",
     uid: "example_uid",
@@ -44,9 +51,9 @@ const Tools = () => {
   const [warning, setWarning] = useState({
     threshold: 10,
     color: "#f6e05e",
-    icon: "ThumbUpOffAltIcon",
-    title: "Enter Here",
-    subTitle: "Please enter text here",
+    icon: "/Images/aomaru_16.png",
+    title: "注意",
+    subTitle: "ひとつずつ入力してください。",
     type: "none",
     company_id: "example_company_id",
     uid: "example_uid",
@@ -60,9 +67,9 @@ const Tools = () => {
   const [stop, setStop] = useState({
     threshold: 10,
     color: "#fc8181",
-    icon: "ThumbUpOffAltIcon",
-    title: "Enter Here",
-    subTitle: "Please enter text here",
+    icon: "/Images/aomaru_59.png",
+    title: "ストップ",
+    subTitle: "入らないでください",
     type: "none",
     company_id: "example_company_id",
     uid: "example_uid",
@@ -75,12 +82,13 @@ const Tools = () => {
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
+  const [openTools, setOpenTools] = useState(false);
   const [activeItem, setActiveItem] = useState({
     threshold: 10,
     color: "#68d391",
-    icon: "ThumbUpOffAltIcon",
-    title: "Enter Here",
-    subTitle: "Please enter text here",
+    icon: "/Images/aomaru_30.png",
+    title: "STOP",
+    subTitle: "Please do not enter ",
     type: null,
     company_id: "example_company_id",
     uid: "example_uid",
@@ -141,18 +149,42 @@ const Tools = () => {
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const onSave = () => {
-    Save(enter)
-      .then((res) => {
-        Save(warning)
-          .then((res) => {
-            Save(stop)
-              .then((res) => toast.success("Updated Successfully!"))
-              .catch((error) => toast.error("Something Went Wrong"));
-          })
-          .catch((error) => console.log(error));
-      })
-      .catch((error) => console.log(error));
+  const onSave = async () => {
+    try {
+      await Save(enter);
+      await Save(warning);
+      await Save(stop);
+      toast.success("Updated Successfully!");
+    } catch (error) {
+      toast.error("Something Went Wrong");
+      console.log(error);
+    }
+  };
+
+  const ReadOnlyTextField = ({ value }) => {
+    const handleCopyClick = () => {
+      // Copy the value to the clipboard
+      navigator.clipboard.writeText(value);
+    };
+
+    return (
+      <Tooltip title={value} placement="top">
+        <TextField
+          value={value}
+          variant="outlined"
+          label="サンプルiframeコード"
+          InputProps={{
+            readOnly: true,
+            endAdornment: (
+              <IconButton onClick={handleCopyClick} edge="end">
+                <FileCopyIcon sx={{ color: "#68d391" }} />
+              </IconButton>
+            ),
+          }}
+          sx={{ ml: 2, width: "20%" }}
+        />
+      </Tooltip>
+    );
   };
 
   return (
@@ -167,13 +199,12 @@ const Tools = () => {
         sx={{ backgroundColor: "#68d391" }}
       >
         <Button
-          variant="outlined"
+          variant="text"
           sx={{
             margin: 2,
             borderColor: "lightgray",
-            color: "white",
+            color: "transparent",
           }}
-          onClick={onSave}
         >
           Save
         </Button>
@@ -186,34 +217,57 @@ const Tools = () => {
         padding={2}
         paddingX={4}
       >
-        <TextField
-          id="outlined-basic"
-          label="Enter API key"
-          variant="outlined"
-          name="apiKey"
-          value={enter.apiKey}
-          onChange={handleChange}
-          sx={{ marginLeft: 2 }}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Maximum Number of people"
-          type="numeric"
-          variant="outlined"
-          name="max_people_count"
-          value={enter.max_people_count}
-          onChange={handleChange}
-          sx={{ marginLeft: 2 }}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Domain"
-          variant="outlined"
-          name="domain"
-          value={enter.domain}
-          onChange={handleChange}
-          sx={{ marginLeft: 2 }}
-        />
+        <motion.div
+          style={{ display: "flex" }}
+          initial={{ width: 0, opacity: 0 }}
+          animate={{
+            opacity: openTools ? 1 : 0,
+            width: openTools ? "100%" : 0,
+            transition: { duration: 0.5 },
+          }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="APIキー"
+            variant="outlined"
+            name="apiKey"
+            value={enter.apiKey}
+            onChange={handleChange}
+            sx={{ marginLeft: 2 }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="最大人数"
+            type="numeric"
+            variant="outlined"
+            name="max_people_count"
+            value={enter.max_people_count}
+            onChange={handleChange}
+            sx={{ marginLeft: 2 }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="ドメイン名"
+            variant="outlined"
+            name="domain"
+            value={enter.domain}
+            onChange={handleChange}
+            sx={{ marginLeft: 2 }}
+          />
+          <ReadOnlyTextField
+            value={
+              '<iframe src="http://3.109.149.185:3000/" width="400" height="350" frameborder="0" allowfullscreen></iframe>'
+            }
+          />
+        </motion.div>
+
+        <IconButton
+          onClick={() => setOpenTools(!openTools)}
+          sx={{ marginLeft: 2, borderRadius: 1 }}
+        >
+          {openTools && <KeyboardDoubleArrowLeftIcon />}
+          {!openTools && <KeyboardDoubleArrowRightIcon />}
+        </IconButton>
       </Grid>
       <Grid xs={12} md={4} paddingX={4}>
         <Accordion
@@ -240,7 +294,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Title"
+                  label="タイトル"
                   variant="outlined"
                   name="title"
                   value={enter.title}
@@ -251,7 +305,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Subtitle"
+                  label="サブタイトル"
                   variant="outlined"
                   name="subTitle"
                   value={enter.subTitle}
@@ -260,11 +314,11 @@ const Tools = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Color</InputLabel>
+                  <InputLabel id="demo-simple-select-label">カラー</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Color"
+                    label="カラー"
                     name="color"
                     value={enter.color}
                     onChange={handleEnterChange}
@@ -306,24 +360,41 @@ const Tools = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Icon</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    アイコン
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Icon"
+                    label="アイコン"
                     name="icon"
                     value={enter.icon}
                     onChange={handleEnterChange}
                   >
                     <MenuItem value={"none"}>none</MenuItem>
                     <MenuItem value={"success"}>
-                      <ThumbUpOffAltIcon />
+                      <Image
+                        src={"/Images/aomaru_30.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                     <MenuItem value={"warning"}>
-                      <WarningAmberIcon />
+                      <Image
+                        src={"/Images/aomaru_16.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                     <MenuItem value={"stop"}>
-                      <PanToolIcon />
+                      <Image
+                        src={"/Images/aomaru_59.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -331,7 +402,7 @@ const Tools = () => {
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Display Style
+                    表示スタイル
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -341,16 +412,16 @@ const Tools = () => {
                     value={enter.type}
                     onChange={handleEnterChange}
                   >
-                    <MenuItem value={"none"}>None</MenuItem>
-                    <MenuItem value={"utilization"}>Utilization</MenuItem>
-                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Threshold Type
+                    閾値タイプ
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -360,8 +431,8 @@ const Tools = () => {
                     value={enter.threshold_type}
                     onChange={handleEnterChange}
                   >
-                    <MenuItem value={"utilization"}>Utilization</MenuItem>
-                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -369,7 +440,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Threshold Value"
+                  label="閾値"
                   variant="outlined"
                   name="threshold"
                   value={enter.threshold}
@@ -403,7 +474,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Title"
+                  label="タイトル"
                   variant="outlined"
                   name="title"
                   value={warning.title}
@@ -414,7 +485,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Subtitle"
+                  label="サブタイトル"
                   variant="outlined"
                   name="subTitle"
                   value={warning.subTitle}
@@ -423,11 +494,11 @@ const Tools = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Color</InputLabel>
+                  <InputLabel id="demo-simple-select-label">カラー</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Color"
+                    label="カラー"
                     name="color"
                     value={warning.color}
                     onChange={handleWarningChange}
@@ -469,24 +540,41 @@ const Tools = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Icon</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    アイコン
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Icon"
+                    label="アイコン"
                     name="icon"
                     value={warning.icon}
                     onChange={handleWarningChange}
                   >
                     <MenuItem value={"none"}>none</MenuItem>
                     <MenuItem value={"success"}>
-                      <ThumbUpOffAltIcon />
+                      <Image
+                        src={"/Images/aomaru_30.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                     <MenuItem value={"warning"}>
-                      <WarningAmberIcon />
+                      <Image
+                        src={"/Images/aomaru_16.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                     <MenuItem value={"stop"}>
-                      <PanToolIcon />
+                      <Image
+                        src={"/Images/aomaru_59.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -494,7 +582,7 @@ const Tools = () => {
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Display Style
+                    表示スタイル
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -504,16 +592,16 @@ const Tools = () => {
                     value={warning.type}
                     onChange={handleWarningChange}
                   >
-                    <MenuItem value={"none"}>None</MenuItem>
-                    <MenuItem value={"utilization"}>Utilization %</MenuItem>
-                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>活用 %</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Threshold Type
+                    閾値タイプ
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -523,8 +611,8 @@ const Tools = () => {
                     value={warning.threshold_type}
                     onChange={handleWarningChange}
                   >
-                    <MenuItem value={"utilization"}>Utilization</MenuItem>
-                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -532,7 +620,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Threshold Value"
+                  label="閾値"
                   variant="outlined"
                   name="threshold"
                   value={warning.threshold}
@@ -566,7 +654,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Title"
+                  label="タイトル"
                   variant="outlined"
                   name="title"
                   value={stop.title}
@@ -577,7 +665,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Subtitle"
+                  label="サブタイトル"
                   variant="outlined"
                   name="subTitle"
                   value={stop.subTitle}
@@ -586,11 +674,11 @@ const Tools = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Color</InputLabel>
+                  <InputLabel id="demo-simple-select-label">カラー</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Color"
+                    label="カラー"
                     name="color"
                     value={stop.color}
                     onChange={handleStopChange}
@@ -632,24 +720,41 @@ const Tools = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Icon</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    アイコン
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Icon"
+                    label="アイコン"
                     name="icon"
                     value={stop.icon}
                     onChange={handleStopChange}
                   >
                     <MenuItem value={"none"}>none</MenuItem>
                     <MenuItem value={"success"}>
-                      <ThumbUpOffAltIcon />
+                      <Image
+                        src={"/Images/aomaru_30.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                     <MenuItem value={"warning"}>
-                      <WarningAmberIcon />
+                      <Image
+                        src={"/Images/aomaru_16.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                     <MenuItem value={"stop"}>
-                      <PanToolIcon />
+                      <Image
+                        src={"/Images/aomaru_59.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -657,7 +762,7 @@ const Tools = () => {
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Display Style
+                    表示スタイル
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -667,16 +772,16 @@ const Tools = () => {
                     value={stop.type}
                     onChange={handleStopChange}
                   >
-                    <MenuItem value={"none"}>None</MenuItem>
-                    <MenuItem value={"utilization"}>Utilization %</MenuItem>
-                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>活用 %</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Threshold Type
+                    閾値タイプ
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -686,8 +791,8 @@ const Tools = () => {
                     value={stop.threshold_type}
                     onChange={handleStopChange}
                   >
-                    <MenuItem value={"utilization"}>Utilization</MenuItem>
-                    <MenuItem value={"occupancy"}>Occupancy (people)</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -695,7 +800,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Threshold Value"
+                  label="閾値"
                   variant="outlined"
                   name="threshold"
                   value={stop.threshold}
@@ -705,6 +810,22 @@ const Tools = () => {
             </Grid>
           </AccordionDetails>
         </Accordion>
+        <Box width={"100%"} sx={{ display: "flex", justifyContent: "end" }}>
+          <Button
+            variant="contained"
+            sx={{
+              borderColor: "lightgray",
+              width: "30%",
+              backgroundColor: "#68d391",
+              "&:hover": {
+                backgroundColor: "#68d391", // Change this to your desired hovering background color
+              },
+            }}
+            onClick={onSave}
+          >
+            保存する
+          </Button>
+        </Box>
       </Grid>
       <Grid xs={12} md={8} padding={2} height={"80vh"}>
         <Demo
