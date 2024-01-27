@@ -15,7 +15,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import Image from "next/image";
 
-const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
+const Demo = ({ title, subTitle, icon, threshold, color, type, iconSize }) => {
   const GlassmorphicGrid = styled(Grid)({
     background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
@@ -64,8 +64,8 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
 
               <Image
                 src={"/Images/aomaru_30.png"}
-                width={300}
-                height={300}
+                width={iconSize}
+                height={iconSize}
                 alt=""
                 style={{ marginBottom: "20px" }}
               />
@@ -77,8 +77,8 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
 
               <Image
                 src={"/Images/aomaru_16.png"}
-                width={300}
-                height={300}
+                width={iconSize}
+                height={iconSize}
                 alt=""
                 style={{ marginBottom: "20px" }}
               />
@@ -90,8 +90,8 @@ const Demo = ({ title, subTitle, icon, threshold, color, type }) => {
 
               <Image
                 src={"/Images/aomaru_59.png"}
-                width={300}
-                height={300}
+                width={iconSize}
+                height={iconSize}
                 alt=""
                 style={{ marginBottom: "20px" }}
               />

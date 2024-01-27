@@ -15,7 +15,7 @@ import PanToolIcon from "@mui/icons-material/PanTool";
 import { styled } from "@mui/system";
 import Image from "next/image";
 
-const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
+const Preview = ({ title, subTitle, color, Icon, progress, type, iconSize }) => {
   const GlassmorphicGrid = styled(Grid)({
     background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
@@ -68,8 +68,8 @@ const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
 
               <Image
                 src={"/Images/aomaru_30.png"}
-                width={300}
-                height={300}
+                width={iconSize ?? 300} 
+                height={iconSize ?? 300}
                 alt=""
                 style={{ marginBottom: "20px" }}
               />
@@ -85,8 +85,8 @@ const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
 
               <Image
                 src={"/Images/aomaru_16.png"}
-                width={300}
-                height={300}
+                width={iconSize ?? 300}
+                height={iconSize ?? 300}
                 alt=""
                 style={{ marginBottom: "20px" }}
               />
@@ -102,8 +102,8 @@ const Preview = ({ title, subTitle, color, Icon, progress, type }) => {
 
               <Image
                 src={"/Images/aomaru_59.png"}
-                width={300}
-                height={300}
+                width={iconSize ?? 300}
+                height={iconSize ?? 300}
                 alt=""
                 style={{ marginBottom: "20px" }}
               />

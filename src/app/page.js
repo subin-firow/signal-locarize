@@ -70,6 +70,7 @@ const HomePage = () => {
         Icon={data?.icon}
         progress={count}
         type={data?.type}
+        iconSize={data?.iconSize}
       />
     )
   );

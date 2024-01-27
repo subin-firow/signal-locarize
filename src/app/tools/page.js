@@ -47,6 +47,7 @@ const Tools = () => {
     threshold_type: "example_threshold",
     apiKey: "apiKey",
     max_people_count: 0,
+    iconSize: 0,
   });
   const [warning, setWarning] = useState({
     threshold: 10,
@@ -63,6 +64,7 @@ const Tools = () => {
     threshold_type: "example_threshold",
     apiKey: "apiKey",
     max_people_count: 0,
+    iconSize: 0,
   });
   const [stop, setStop] = useState({
     threshold: 10,
@@ -79,6 +81,7 @@ const Tools = () => {
     threshold_type: "example_threshold",
     apiKey: "apiKey",
     max_people_count: 0,
+    iconSize: 0,
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -97,6 +100,7 @@ const Tools = () => {
     threshold_type: "example_threshold",
     apiKey: "apiKey",
     max_people_count: 0,
+    iconSize: 0,
   });
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -361,6 +365,25 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
+                    表示スタイル
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Display Style"
+                    name="type"
+                    value={enter.type}
+                    onChange={handleEnterChange}
+                  >
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
                     アイコン
                   </InputLabel>
                   <Select
@@ -399,22 +422,22 @@ const Tools = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    表示スタイル
+                    Icon Size
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Display Style"
-                    name="type"
-                    value={enter.type}
+                    name="iconSize"
+                    value={enter.iconSize}
                     onChange={handleEnterChange}
                   >
-                    <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>活用</MenuItem>
-                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={200}>200</MenuItem>
+                    <MenuItem value={300}>300</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -541,6 +564,25 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
+                    表示スタイル
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Display Style"
+                    name="type"
+                    value={warning.type}
+                    onChange={handleWarningChange}
+                  >
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>活用 %</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
                     アイコン
                   </InputLabel>
                   <Select
@@ -579,22 +621,22 @@ const Tools = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    表示スタイル
+                    Icon Size
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Display Style"
-                    name="type"
-                    value={warning.type}
+                    name="iconSize"
+                    value={warning.iconSize}
                     onChange={handleWarningChange}
                   >
-                    <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>活用 %</MenuItem>
-                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={200}>200</MenuItem>
+                    <MenuItem value={300}>300</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -721,6 +763,25 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
+                    表示スタイル
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Display Style"
+                    name="type"
+                    value={stop.type}
+                    onChange={handleStopChange}
+                  >
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>活用 %</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
                     アイコン
                   </InputLabel>
                   <Select
@@ -759,22 +820,22 @@ const Tools = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    表示スタイル
+                    Icon Size
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Display Style"
-                    name="type"
-                    value={stop.type}
+                    name="iconSize"
+                    value={stop.iconSize}
                     onChange={handleStopChange}
                   >
-                    <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>活用 %</MenuItem>
-                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={200}>200</MenuItem>
+                    <MenuItem value={300}>300</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -835,6 +896,7 @@ const Tools = () => {
           threshold={activeItem?.threshold}
           color={activeItem?.color}
           type={activeItem?.type}
+          iconSize={activeItem?.iconSize}
         />
       </Grid>
     </Grid>
