@@ -15,7 +15,15 @@ import toast from "react-hot-toast";
 import { CustomToast } from "./toast";
 
 export default function page() {
-  const [details, setDetails] = useState(null);
+  const initialstate = {
+    email: "",
+    password: "",
+    re_password: "",
+    location_id: "",
+    company_id: "",
+    access_code: "",
+  };
+  const [details, setDetails] = useState(initialstate);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -24,6 +32,7 @@ export default function page() {
       [e.target.name]: e.target.value,
     }));
   };
+
   const handleCreate = () => {
     console.log(details);
 
@@ -39,13 +48,13 @@ export default function page() {
         toast((t) => (
           <CustomToast type="success" message="Account added successfully" />
         ));
-        setDetails(null);
+        setDetails(initialstate);
       })
       .catch((e) => {
         console.log(e);
         toast.dismiss();
         setLoading(false);
-        toast.error(e?.response.data.message);
+        toast.error(e?.response?.data.message);
       });
   };
   return (
