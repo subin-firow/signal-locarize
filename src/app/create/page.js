@@ -54,7 +54,7 @@ export default function page() {
         console.log(e);
         toast.dismiss();
         setLoading(false);
-        toast.error(e?.response?.data.message);
+        toast.error(e?.response?.data?.message);
       });
   };
   return (
