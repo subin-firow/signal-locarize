@@ -328,7 +328,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Font Size of Title"
+                  label="タイトルのサイズ"
                   variant="outlined"
                   name="titleFontSize"
                   value={enter.titleFontSize}
@@ -340,7 +340,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Font Size of SubTitle"
+                  label="サブタイトルのサイズ"
                   variant="outlined"
                   name="subTitleFontSize"
                   value={enter.subTitleFontSize}
@@ -457,12 +457,12 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Icon Size
+                    アイコンのサイズ
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Icon Size"
+                    label="アイコンのサイズ"
                     name="iconSize"
                     value={enter.iconSize}
                     onChange={handleEnterChange}
@@ -551,7 +551,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Font Size of Title"
+                  label="タイトルのサイズ"
                   variant="outlined"
                   name="titleFontSize"
                   value={warning.titleFontSize}
@@ -563,7 +563,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Font Size of SubTitle"
+                  label="サブタイトルのサイズ"
                   variant="outlined"
                   name="subTitleFontSize"
                   value={warning.subTitleFontSize}
@@ -649,7 +649,7 @@ const Tools = () => {
                     value={warning.icon}
                     onChange={handleWarningChange}
                   >
-                    <MenuItem value={"none"}>none</MenuItem>
+                    <MenuItem value={"none"}>無し</MenuItem>
                     <MenuItem value={"success"}>
                       <Image
                         src={"/Images/aomaru_30.png"}
@@ -680,12 +680,12 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Icon Size
+                    アイコンのサイズ
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Icon Size"
+                    label="アイコンのサイズ"
                     name="iconSize"
                     value={warning.iconSize}
                     onChange={handleWarningChange}
@@ -774,7 +774,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Font Size of Title"
+                  label="タイトルのサイズ"
                   variant="outlined"
                   name="titleFontSize"
                   value={stop.titleFontSize}
@@ -786,7 +786,7 @@ const Tools = () => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Font Size of SubTitle"
+                  label="サブタイトルのサイズ"
                   variant="outlined"
                   name="subTitleFontSize"
                   value={stop.subTitleFontSize}
@@ -872,7 +872,7 @@ const Tools = () => {
                     value={stop.icon}
                     onChange={handleStopChange}
                   >
-                    <MenuItem value={"none"}>none</MenuItem>
+                    <MenuItem value={"none"}>無し</MenuItem>
                     <MenuItem value={"success"}>
                       <Image
                         src={"/Images/aomaru_30.png"}
@@ -903,12 +903,12 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Icon Size
+                    アイコンのサイズ
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Icon Size"
+                    label="アイコンのサイズ"
                     name="iconSize"
                     value={stop.iconSize}
                     onChange={handleStopChange}
