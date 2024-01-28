@@ -71,6 +71,8 @@ const HomePage = () => {
         progress={count}
         type={data?.type}
         iconSize={data?.iconSize}
+        titleFontSize={data?.titleFontSize}
+        subTitleFontSize={data?.subTitleFontSize}
       />
     )
   );

@@ -48,6 +48,8 @@ const Tools = () => {
     apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
+    titleFontSize: 24,
+    subTitleFontSize: 12,
   });
   const [warning, setWarning] = useState({
     threshold: 10,
@@ -65,6 +67,8 @@ const Tools = () => {
     apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
+    titleFontSize: 24,
+    subTitleFontSize: 12,
   });
   const [stop, setStop] = useState({
     threshold: 10,
@@ -82,6 +86,8 @@ const Tools = () => {
     apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
+    titleFontSize: 24,
+    subTitleFontSize: 12,
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -101,6 +107,8 @@ const Tools = () => {
     apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
+    titleFontSize: 24,
+    subTitleFontSize: 12,
   });
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -316,6 +324,30 @@ const Tools = () => {
                   onChange={handleEnterChange}
                 />
               </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Font Size of Title"
+                  variant="outlined"
+                  name="titleFontSize"
+                  value={enter.titleFontSize}
+                  onChange={handleEnterChange}
+                  type="numeric"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Font Size of SubTitle"
+                  variant="outlined"
+                  name="subTitleFontSize"
+                  value={enter.subTitleFontSize}
+                  onChange={handleEnterChange}
+                  type="numeric"
+                />
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">カラー</InputLabel>
@@ -430,7 +462,7 @@ const Tools = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Display Style"
+                    label="Icon Size"
                     name="iconSize"
                     value={enter.iconSize}
                     onChange={handleEnterChange}
@@ -513,6 +545,30 @@ const Tools = () => {
                   name="subTitle"
                   value={warning.subTitle}
                   onChange={handleWarningChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Font Size of Title"
+                  variant="outlined"
+                  name="titleFontSize"
+                  value={warning.titleFontSize}
+                  onChange={handleWarningChange}
+                  type="numeric"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Font Size of SubTitle"
+                  variant="outlined"
+                  name="subTitleFontSize"
+                  value={warning.subTitleFontSize}
+                  onChange={handleWarningChange}
+                  type="numeric"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -629,7 +685,7 @@ const Tools = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Display Style"
+                    label="Icon Size"
                     name="iconSize"
                     value={warning.iconSize}
                     onChange={handleWarningChange}
@@ -712,6 +768,30 @@ const Tools = () => {
                   name="subTitle"
                   value={stop.subTitle}
                   onChange={handleStopChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Font Size of Title"
+                  variant="outlined"
+                  name="titleFontSize"
+                  value={stop.titleFontSize}
+                  onChange={handleStopChange}
+                  type="numeric"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Font Size of SubTitle"
+                  variant="outlined"
+                  name="subTitleFontSize"
+                  value={stop.subTitleFontSize}
+                  onChange={handleStopChange}
+                  type="numeric"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -828,7 +908,7 @@ const Tools = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Display Style"
+                    label="Icon Size"
                     name="iconSize"
                     value={stop.iconSize}
                     onChange={handleStopChange}
@@ -897,6 +977,8 @@ const Tools = () => {
           color={activeItem?.color}
           type={activeItem?.type}
           iconSize={activeItem?.iconSize}
+          titleFontSize={activeItem?.titleFontSize}
+          subTitleFontSize={activeItem?.subTitleFontSize}
         />
       </Grid>
     </Grid>
