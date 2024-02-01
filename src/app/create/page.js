@@ -1,5 +1,6 @@
 "use client";
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -8,15 +9,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { CustomToast } from "./toast";
+import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     setDetails((prevData) => ({
@@ -40,6 +43,7 @@ export default function page() {
           <CustomToast type="success" message="Account added successfully" />
         ));
         setDetails(null);
+        router.push("/login");
       })
       .catch((e) => {
         console.log(e);
@@ -109,14 +113,14 @@ export default function page() {
                 </Grid>
 
                 <Grid container py={2} display={"flex"} justifyContent={"end"}>
-                  <LoadingButton
+                  <Button
                     loading={loading}
                     onClick={handleCreate}
                     fullWidth
                     variant="outlined"
                   >
                     Create
-                  </LoadingButton>
+                  </Button>
                 </Grid>
               </CardContent>
             </Card>

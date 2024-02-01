@@ -18,7 +18,9 @@ const HomePage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5008/v2/example_company_id/example_location`
+          `http://localhost:5008/v2/${localStorage.getItem(
+            "companyId"
+          )}/${localStorage.getItem("locationId")}`
         );
         setCount(response.data.count);
       } catch (error) {

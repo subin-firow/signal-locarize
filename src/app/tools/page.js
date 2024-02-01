@@ -30,6 +30,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Tools = () => {
   const [enter, setEnter] = useState({
@@ -110,6 +111,13 @@ const Tools = () => {
     titleFontSize: 24,
     subTitleFontSize: 12,
   });
+
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem("userId")) {
+      router.push("/login");
+    }
+  }, []);
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
     setExpandedAccordion(isExpanded ? panel : null);
@@ -267,12 +275,13 @@ const Tools = () => {
             sx={{ marginLeft: 2 }}
           />
           <ReadOnlyTextField
-            value={
-              '<iframe src="http://3.109.149.185:3000/" width="400" height="350" frameborder="0" allowfullscreen></iframe>'
-            }
+            value={`<iframe src=http://3.109.149.185:3000?company_id=${localStorage.getItem(
+              "companyId"
+            )}&location_id=${localStorage.getItem(
+              "locationId"
+            )}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
           />
         </motion.div>
-
         <IconButton
           onClick={() => setOpenTools(!openTools)}
           sx={{ marginLeft: 2, borderRadius: 1 }}
