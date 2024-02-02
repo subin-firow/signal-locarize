@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Preview from "@/components/preview";
 import { GetData, getRandomLiveNunber } from "@/services/index.service";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
   const [data, setData] = useState({});
@@ -14,13 +15,14 @@ const HomePage = () => {
   const [warning, setWarning] = useState({});
   const [stop, setStop] = useState({});
 
+  const router = useRouter();
+  const { company_id, location_id } = router.query;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5008/v2/${localStorage.getItem(
-            "companyId"
-          )}/${localStorage.getItem("locationId")}`
+          `http://localhost:5008/v2/${company_id}/${location_id}`
         );
         setCount(response.data.count);
       } catch (error) {
@@ -38,7 +40,7 @@ const HomePage = () => {
 
   useEffect(() => {
     setLoading(true);
-    GetData("example_company_id", "example_location")
+    GetData("company_id", "location_id")
       .then((res) => {
         setData(res?.data?.enter);
         setEnter(res?.data?.enter);
