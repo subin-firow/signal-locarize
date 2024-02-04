@@ -275,9 +275,9 @@ const Tools = () => {
             sx={{ marginLeft: 2 }}
           />
           <ReadOnlyTextField
-            value={`<iframe src=http://3.109.149.185:3000?company_id=${localStorage.getItem(
+            value={`<iframe src=http://3.109.149.185:3000/home/${localStorage.getItem(
               "companyId"
-            )}&location_id=${localStorage.getItem(
+            )}/${localStorage.getItem(
               "locationId"
             )}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
           />
