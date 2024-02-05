@@ -110,6 +110,15 @@ export default function Page() {
                     value={details?.access_code}
                     type="password"
                   />
+                  <TextField
+                    onChange={(e) => handleChange(e)}
+                    fullWidth
+                    variant="standard"
+                    label="APIキー"
+                    name="apiKey"
+                    value={details?.apiKey}
+                    type="text"
+                  />
                 </Grid>
 
                 <Grid container py={2} display={"flex"} justifyContent={"end"}>

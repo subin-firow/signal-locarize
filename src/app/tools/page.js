@@ -46,7 +46,6 @@ const Tools = () => {
     location_id: "example_location",
     domain: "example_domain",
     threshold_type: "example_threshold",
-    apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
     titleFontSize: 24,
@@ -65,7 +64,6 @@ const Tools = () => {
     location_id: "example_location",
     domain: "example_domain",
     threshold_type: "example_threshold",
-    apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
     titleFontSize: 24,
@@ -84,7 +82,6 @@ const Tools = () => {
     location_id: "example_location",
     domain: "example_domain",
     threshold_type: "example_threshold",
-    apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
     titleFontSize: 24,
@@ -105,7 +102,6 @@ const Tools = () => {
     location_id: "example_location",
     domain: "example_domain",
     threshold_type: "example_threshold",
-    apiKey: "apiKey",
     max_people_count: 0,
     iconSize: 0,
     titleFontSize: 24,
@@ -246,15 +242,6 @@ const Tools = () => {
             transition: { duration: 0.5 },
           }}
         >
-          <TextField
-            id="outlined-basic"
-            label="APIキー"
-            variant="outlined"
-            name="apiKey"
-            value={enter.apiKey}
-            onChange={handleChange}
-            sx={{ marginLeft: 2 }}
-          />
           <TextField
             id="outlined-basic"
             label="最大人数"
