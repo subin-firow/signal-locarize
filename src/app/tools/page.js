@@ -90,6 +90,8 @@ const Tools = () => {
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
   const [openTools, setOpenTools] = useState(false);
+  const [companyId, setCompanyId] = useState(0);
+  const [locationId, setLocationId] = useState(0);
   const [activeItem, setActiveItem] = useState({
     threshold: 10,
     color: "#68d391",
@@ -112,6 +114,9 @@ const Tools = () => {
   useEffect(() => {
     if (!localStorage.getItem("userId")) {
       router.push("/login");
+    } else {
+      setCompanyId(localStorage.getItem("companyId"));
+      setLocationId(localStorage.getItem("locationId"));
     }
   }, []);
 
@@ -262,11 +267,7 @@ const Tools = () => {
             sx={{ marginLeft: 2 }}
           />
           <ReadOnlyTextField
-            value={`<iframe src=http://3.109.149.185:3000/home/${localStorage.getItem(
-              "companyId"
-            )}/${localStorage.getItem(
-              "locationId"
-            )}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
+            value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${locationId}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
           />
         </motion.div>
         <IconButton
