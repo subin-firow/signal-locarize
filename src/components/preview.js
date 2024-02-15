@@ -25,13 +25,20 @@ const Preview = ({
   iconSize,
   titleFontSize,
   subTitleFontSize,
+  max_capacity,
+  backgroundColor,
 }) => {
   const GlassmorphicGrid = styled(Grid)({
-    background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
+    background: backgroundColor, // Black background with transparency
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
     borderRadius: "8px", // Adjust the border radius as needed
     padding: "16px", // Add padding for a better visual effect
   });
+  console.log(max_capacity,progress);
+  if (max_capacity != 0 ){(max_capacity = progress * 100 / max_capacity),
+  max_capacity= max_capacity.toFixed(0)  }
+  else{max_capacity= progress}
+ 
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 15,
@@ -125,7 +132,7 @@ const Preview = ({
                   fontSize: { xs: "5vh", sm: "10vh", md: "15vh" },
                 }}
               >
-                {progress} %
+                {max_capacity} %
               </Typography>
             )}
             {type === "occupancy" && (
@@ -141,7 +148,7 @@ const Preview = ({
           </Grid>
           <GlassmorphicGrid item xs={12}>
             <Grid border={"solid white 2px"} borderRadius="8px">
-              <BorderLinearProgress variant="determinate" value={progress} />
+              <BorderLinearProgress variant="determinate" value={max_capacity} />
             </Grid>
             <Typography
               sx={{

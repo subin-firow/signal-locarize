@@ -31,34 +31,31 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-//import localStorage from 'local-storage';
 
 const Tools = () => {
   const [enter, setEnter] = useState({
     threshold: 10,
     color: "#68d391",
-    icon: "success",
+    icon: "/Images/aomaru_30.png",
     title: "いらっしゃいませ",
     subTitle: "入力してください",
     type: "none",
     company_id: "example_company_id",
     uid: "example_uid",
     display_type: "Enter",
-    location_id: "",
+    location_id: "example_location",
     domain: "example_domain",
-    threshold_type: "occupancy",
-    max_people_count: 100,
-    iconSize: 300,
+    threshold_type: "example_threshold",
+    apiKey: "apiKey",
+    max_people_count: 0,
+    iconSize: 0,
     titleFontSize: 24,
     subTitleFontSize: 12,
-    spot_id: "",
-    backgroundColor:"#26874B",
-
   });
   const [warning, setWarning] = useState({
-    threshold: 20,
+    threshold: 10,
     color: "#f6e05e",
-    icon: "warning",
+    icon: "/Images/aomaru_16.png",
     title: "注意",
     subTitle: "ひとつずつ入力してください。",
     type: "none",
@@ -67,18 +64,17 @@ const Tools = () => {
     display_type: "Warning",
     location_id: "example_location",
     domain: "example_domain",
-    threshold_type: "occupancy",
-    max_people_count: 100,
-    iconSize: 300,
+    threshold_type: "example_threshold",
+    apiKey: "apiKey",
+    max_people_count: 0,
+    iconSize: 0,
     titleFontSize: 24,
     subTitleFontSize: 12,
-    spot_id: "example spot ID",
-    backgroundColor: "#897506",
   });
   const [stop, setStop] = useState({
-    threshold: 30,
+    threshold: 10,
     color: "#fc8181",
-    icon: "stop",
+    icon: "/Images/aomaru_59.png",
     title: "ストップ",
     subTitle: "入らないでください",
     type: "none",
@@ -87,19 +83,16 @@ const Tools = () => {
     display_type: "Stop",
     location_id: "example_location",
     domain: "example_domain",
-    threshold_type: "occupancy",
+    threshold_type: "example_threshold",
+    apiKey: "apiKey",
     max_people_count: 0,
-    iconSize: 300,
+    iconSize: 0,
     titleFontSize: 24,
     subTitleFontSize: 12,
-    spot_id: "example spot ID",
-    backgroundColor: "#EF0606",
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
   const [openTools, setOpenTools] = useState(false);
-  const [companyId, setCompanyId] = useState(0);
-  const [locationId, setLocationId] = useState(0);
   const [activeItem, setActiveItem] = useState({
     threshold: 10,
     color: "#68d391",
@@ -112,20 +105,17 @@ const Tools = () => {
     location_id: "example_location",
     domain: "example_domain",
     threshold_type: "example_threshold",
-    max_people_count: 100,
+    apiKey: "apiKey",
+    max_people_count: 0,
     iconSize: 0,
     titleFontSize: 24,
     subTitleFontSize: 12,
-    spot_id: "example spot ID",
   });
 
   const router = useRouter();
   useEffect(() => {
     if (!localStorage.getItem("userId")) {
       router.push("/login");
-    }else {
-      setCompanyId(localStorage.getItem("companyId"));
-      setLocationId(localStorage.getItem("locationId"));
     }
   }, []);
 
@@ -180,29 +170,15 @@ const Tools = () => {
   };
 
   const onSave = async () => {
-    if(enter.spot_id && enter.location_id)
-    {
-      if( enter.max_people_count=="") {
-        enter.max_people_count=100,
-        warning.max_people_count=100,
-        stop.max_people_count=100
-      }
-      try {
-
-        enter.company_id =companyId; 
-        warning.company_id = companyId;
-        stop.company_id = companyId;
-        await Save(enter);
-        await Save(warning);
-        await Save(stop);
-        toast.success("保存に成功しました！!");
-      } catch (error) {
-        toast.error("保存操作に失敗しました。サポートチームまでご連絡ください。");
-        console.log(error);
-      }
+    try {
+      await Save(enter);
+      await Save(warning);
+      await Save(stop);
+      toast.success("Updated Successfully!");
+    } catch (error) {
+      toast.error("Something Went Wrong");
+      console.log(error);
     }
-    else
-    { toast.success("スポットIDとロケーションIDを正しく入力してください。");}
   };
 
   const ReadOnlyTextField = ({ value }) => {
@@ -272,6 +248,15 @@ const Tools = () => {
         >
           <TextField
             id="outlined-basic"
+            label="APIキー"
+            variant="outlined"
+            name="apiKey"
+            value={enter.apiKey}
+            onChange={handleChange}
+            sx={{ marginLeft: 2 }}
+          />
+          <TextField
+            id="outlined-basic"
             label="最大人数"
             type="numeric"
             variant="outlined"
@@ -280,27 +265,6 @@ const Tools = () => {
             onChange={handleChange}
             sx={{ marginLeft: 2 }}
           />
-            <TextField
-            id="outlined-basic"
-            label="ロケーションID "
-            type="numeric"
-            variant="outlined"
-            name="location_id"
-            value={enter.location_id}
-            onChange={handleChange}
-            sx={{ marginLeft: 2 }}
-          />
-           <TextField
-            id="outlined-basic"
-            label="スポットID"
-            type="numeric"
-            variant="outlined"
-            name="spot_id"
-            value={enter.spot_id}
-            onChange={handleChange}
-            sx={{ marginLeft: 2 }}
-          />
-          
           <TextField
             id="outlined-basic"
             label="ドメイン名"
@@ -311,8 +275,11 @@ const Tools = () => {
             sx={{ marginLeft: 2 }}
           />
           <ReadOnlyTextField
-          //  value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${locationId}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
-              value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${enter.location_id}/${enter.spot_id}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
+            value={`<iframe src=http://3.109.149.185:3000/home/${localStorage.getItem(
+              "companyId"
+            )}/${localStorage.getItem(
+              "locationId"
+            )}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
           />
         </motion.div>
         <IconButton
@@ -323,7 +290,7 @@ const Tools = () => {
           {!openTools && <KeyboardDoubleArrowRightIcon />}
         </IconButton>
       </Grid>
-      <Grid item xs={12} md={4} paddingX={4}>
+      <Grid xs={12} md={4} paddingX={4}>
         <Accordion
           expanded={expandedAccordion === "enter"}
           onChange={handleAccordionChange("enter")}
@@ -450,8 +417,8 @@ const Tools = () => {
                     onChange={handleEnterChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>利用率 %</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -528,8 +495,8 @@ const Tools = () => {
                     value={enter.threshold_type}
                     onChange={handleEnterChange}
                   >
-                    <MenuItem value={"utilization"}>利用率</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -673,8 +640,8 @@ const Tools = () => {
                     onChange={handleWarningChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>利用率 %</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                    <MenuItem value={"utilization"}>活用 %</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -751,8 +718,8 @@ const Tools = () => {
                     value={warning.threshold_type}
                     onChange={handleWarningChange}
                   >
-                    <MenuItem value={"utilization"}>利用率</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -896,8 +863,8 @@ const Tools = () => {
                     onChange={handleStopChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>利用率 %</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                    <MenuItem value={"utilization"}>活用 %</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -974,8 +941,8 @@ const Tools = () => {
                     value={stop.threshold_type}
                     onChange={handleStopChange}
                   >
-                    <MenuItem value={"utilization"}>利用率</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                    <MenuItem value={"utilization"}>活用</MenuItem>
+                    <MenuItem value={"occupancy"}>稼働率（人）</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -1010,7 +977,7 @@ const Tools = () => {
           </Button>
         </Box>
       </Grid>
-      <Grid item xs={12} md={8} padding={2} height={"80vh"}>
+      <Grid xs={12} md={8} padding={2} height={"80vh"}>
         <Demo
           title={activeItem?.title}
           subTitle={activeItem?.subTitle}
@@ -1021,8 +988,6 @@ const Tools = () => {
           iconSize={activeItem?.iconSize}
           titleFontSize={activeItem?.titleFontSize}
           subTitleFontSize={activeItem?.subTitleFontSize}
-          max_capacity = {enter.max_people_count}
-          backgroundColor = {activeItem.backgroundColor}
         />
       </Grid>
     </Grid>

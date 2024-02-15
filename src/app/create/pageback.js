@@ -31,7 +31,8 @@ export default function Page() {
     console.log(details);
 
     setLoading(true);
-    toast.loading("アカウントを追加する");
+    toast.loading("Adding Account");
+
     axios
       .post(`http://localhost:5008/v1/create-account`, details)
       .then((res) => {
@@ -39,7 +40,7 @@ export default function Page() {
         setLoading(false);
         toast.dismiss();
         toast((t) => (
-          <CustomToast type="success" message="アカウントの追加に成功しました。" />
+          <CustomToast type="success" message="Account added successfully" />
         ));
         setDetails(null);
         router.push("/login");
@@ -48,7 +49,6 @@ export default function Page() {
         console.log(e);
         toast.dismiss();
         setLoading(false);
-        toast.loading("error ");
         toast.error(e?.response.data.message);
       });
   };
@@ -109,15 +109,6 @@ export default function Page() {
                     name="access_code"
                     value={details?.access_code}
                     type="password"
-                  />
-                  <TextField
-                    onChange={(e) => handleChange(e)}
-                    fullWidth
-                    variant="standard"
-                    label="APIキー"
-                    name="apiSecretKey"
-                    value={details?.apiSecretKey}
-                    type="text"
                   />
                 </Grid>
 

@@ -22,14 +22,14 @@ const Login = () => {
 
   const handleSubmit = () => {
     setLoading(true);
-    toast.loading("Loggin in");
+    toast.loading("ログインする");
     axios
       .post(`http://localhost:5008/v1/login`, details)
       .then((res) => {
         console.log(res.data.data);
         setLoading(false);
         toast.dismiss();
-        toast((t) => <CustomToast type="success" message="Login successful" />);
+        toast((t) => <CustomToast type="success" message="ログインに成功した" />);
         // setDetails(null);
 
         localStorage.setItem("userId", res.data.data._id);

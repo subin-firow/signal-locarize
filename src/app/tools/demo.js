@@ -14,6 +14,7 @@ import { styled } from "@mui/system";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import Image from "next/image";
+import { m } from "framer-motion";
 
 const Demo = ({
   title,
@@ -25,13 +26,21 @@ const Demo = ({
   iconSize,
   titleFontSize,
   subTitleFontSize,
+  max_capacity,
+  backgroundColor,
 }) => {
+  
   const GlassmorphicGrid = styled(Grid)({
-    background: "rgba(0, 0, 0, 0.1)", // Black background with transparency
+    background: backgroundColor, // Black background with transparency
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
     borderRadius: "8px", // Adjust the border radius as needed
     padding: "16px", // Add padding for a better visual effect
   });
+  if (max_capacity != 0 ){(max_capacity = threshold * 100 / max_capacity),
+      max_capacity= max_capacity.toFixed(0)  }
+  else{max_capacity= threshold}
+         // calculate threshold percentage
+      
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 15,
@@ -44,7 +53,7 @@ const Demo = ({
       backgroundColor: theme.palette.mode === "light" ? `${color}` : "#308fe8",
     },
   }));
-
+//308fe8
   return (
     <Box
       sx={{
@@ -55,7 +64,9 @@ const Demo = ({
         justifyContent: "center",
         alignItems: "center",
       }}
+    
     >
+       
       <Container>
         <Grid container>
           <Grid
@@ -71,6 +82,7 @@ const Demo = ({
               // <ThumbUpOffAltIcon
               //   sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
               // />
+              
 
               <Image
                 src={"/Images/aomaru_30.png"}
@@ -108,7 +120,7 @@ const Demo = ({
             )}
             {type === "utilization" && (
               <Typography sx={{ color: "white", fontSize: "15vh" }}>
-                {threshold} %
+                {max_capacity} %
               </Typography>
             )}
             {type === "occupancy" && (
@@ -118,8 +130,9 @@ const Demo = ({
             )}
           </Grid>
           <GlassmorphicGrid item xs={12} marginBottom={4}>
+            
             <Grid border={"solid white 6px"} borderRadius="12px">
-              <BorderLinearProgress variant="determinate" value={threshold} />
+              <BorderLinearProgress variant="determinate" value={max_capacity} />
             </Grid>
             <Typography
               variant="h2"
