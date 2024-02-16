@@ -29,18 +29,19 @@ const Demo = ({
   max_capacity,
   backgroundColor,
 }) => {
-  
   const GlassmorphicGrid = styled(Grid)({
     background: backgroundColor, // Black background with transparency
     backdropFilter: "blur(10px)", // Adjust the blur radius as neededa
     borderRadius: "8px", // Adjust the border radius as needed
     padding: "16px", // Add padding for a better visual effect
   });
-  if (max_capacity != 0 ){(max_capacity = threshold * 100 / max_capacity),
-      max_capacity= max_capacity.toFixed(0)  }
-  else{max_capacity= threshold}
-         // calculate threshold percentage
-      
+  if (max_capacity != 0) {
+    (max_capacity = (threshold * 100) / max_capacity),
+      (max_capacity = max_capacity.toFixed(0));
+  } else {
+    max_capacity = threshold;
+  }
+  // calculate threshold percentage
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 15,
@@ -53,7 +54,7 @@ const Demo = ({
       backgroundColor: theme.palette.mode === "light" ? `${color}` : "#308fe8",
     },
   }));
-//308fe8
+  //308fe8
   return (
     <Box
       sx={{
@@ -64,9 +65,7 @@ const Demo = ({
         justifyContent: "center",
         alignItems: "center",
       }}
-    
     >
-       
       <Container>
         <Grid container>
           <Grid
@@ -82,7 +81,6 @@ const Demo = ({
               // <ThumbUpOffAltIcon
               //   sx={{ color: "white", fontSize: "35vh", marginBottom: 2 }}
               // />
-              
 
               <Image
                 src={"/Images/aomaru_30.png"}
@@ -130,9 +128,11 @@ const Demo = ({
             )}
           </Grid>
           <GlassmorphicGrid item xs={12} marginBottom={4}>
-            
             <Grid border={"solid white 6px"} borderRadius="12px">
-              <BorderLinearProgress variant="determinate" value={max_capacity} />
+              <BorderLinearProgress
+                variant="determinate"
+                value={max_capacity}
+              />
             </Grid>
             <Typography
               variant="h2"

@@ -16,9 +16,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import PanToolIcon from "@mui/icons-material/PanTool";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Demo from "./demo";
 import { Save } from "@/services/index.service";
@@ -31,7 +28,6 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-//import localStorage from 'local-storage';
 
 const Tools = () => {
   const [enter, setEnter] = useState({
@@ -52,8 +48,7 @@ const Tools = () => {
     titleFontSize: 24,
     subTitleFontSize: 12,
     spot_id: "",
-    backgroundColor:"#26874B",
-
+    backgroundColor: "#26874B",
   });
   const [warning, setWarning] = useState({
     threshold: 20,
@@ -76,6 +71,26 @@ const Tools = () => {
     backgroundColor: "#897506",
   });
   const [stop, setStop] = useState({
+    threshold: 30,
+    color: "#fc8181",
+    icon: "stop",
+    title: "ストップ",
+    subTitle: "入らないでください",
+    type: "none",
+    company_id: "example_company_id",
+    uid: "example_uid",
+    display_type: "Stop",
+    location_id: "example_location",
+    domain: "example_domain",
+    threshold_type: "occupancy",
+    max_people_count: 0,
+    iconSize: 300,
+    titleFontSize: 24,
+    subTitleFontSize: 12,
+    spot_id: "example spot ID",
+    backgroundColor: "#EF0606",
+  });
+  const [closed, setClosed] = useState({
     threshold: 30,
     color: "#fc8181",
     icon: "stop",
@@ -123,7 +138,7 @@ const Tools = () => {
   useEffect(() => {
     if (!localStorage.getItem("userId")) {
       router.push("/login");
-    }else {
+    } else {
       setCompanyId(localStorage.getItem("companyId"));
       setLocationId(localStorage.getItem("locationId"));
     }
@@ -144,6 +159,10 @@ const Tools = () => {
         case "stop":
           setExpandedAccordion("stop");
           setActiveItem(stop);
+          break;
+        case "closed":
+          setExpandedAccordion("closed");
+          setActiveItem(closed);
           break;
         default:
           setExpandedAccordion(null);
@@ -169,40 +188,50 @@ const Tools = () => {
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleClosedChange = (event) => {
+    const { name, value } = event.target;
+    setClosed((prevData) => ({ ...prevData, [name]: value }));
+    setActiveItem((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     setEnter((prevData) => ({ ...prevData, [name]: value }));
     setWarning((prevData) => ({ ...prevData, [name]: value }));
     setStop((prevData) => ({ ...prevData, [name]: value }));
+    setClosed((prevData) => ({ ...prevData, [name]: value }));
 
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const onSave = async () => {
-    if(enter.spot_id && enter.location_id)
-    {
-      if( enter.max_people_count=="") {
-        enter.max_people_count=100,
-        warning.max_people_count=100,
-        stop.max_people_count=100
+    if (enter.spot_id && enter.location_id) {
+      if (enter.max_people_count == "") {
+        (enter.max_people_count = 100),
+          (warning.max_people_count = 100),
+          (stop.max_people_count = 100);
+        closed.max_people_count = 100;
       }
       try {
-
-        enter.company_id =companyId; 
+        enter.company_id = companyId;
         warning.company_id = companyId;
         stop.company_id = companyId;
+        closed.company_id = companyId;
         await Save(enter);
         await Save(warning);
         await Save(stop);
+        await Save(closed);
         toast.success("保存に成功しました！!");
       } catch (error) {
-        toast.error("保存操作に失敗しました。サポートチームまでご連絡ください。");
+        toast.error(
+          "保存操作に失敗しました。サポートチームまでご連絡ください。"
+        );
         console.log(error);
       }
+    } else {
+      toast.success("スポットIDとロケーションIDを正しく入力してください。");
     }
-    else
-    { toast.success("スポットIDとロケーションIDを正しく入力してください。");}
   };
 
   const ReadOnlyTextField = ({ value }) => {
@@ -280,7 +309,7 @@ const Tools = () => {
             onChange={handleChange}
             sx={{ marginLeft: 2 }}
           />
-            <TextField
+          <TextField
             id="outlined-basic"
             label="ロケーションID "
             type="numeric"
@@ -290,7 +319,7 @@ const Tools = () => {
             onChange={handleChange}
             sx={{ marginLeft: 2 }}
           />
-           <TextField
+          <TextField
             id="outlined-basic"
             label="スポットID"
             type="numeric"
@@ -300,7 +329,7 @@ const Tools = () => {
             onChange={handleChange}
             sx={{ marginLeft: 2 }}
           />
-          
+
           <TextField
             id="outlined-basic"
             label="ドメイン名"
@@ -311,8 +340,8 @@ const Tools = () => {
             sx={{ marginLeft: 2 }}
           />
           <ReadOnlyTextField
-          //  value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${locationId}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
-              value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${enter.location_id}/${enter.spot_id}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
+            //  value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${locationId}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
+            value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${enter.location_id}/${enter.spot_id}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
           />
         </motion.div>
         <IconButton
@@ -993,6 +1022,230 @@ const Tools = () => {
             </Grid>
           </AccordionDetails>
         </Accordion>
+        <Accordion
+          expanded={expandedAccordion === "closed"}
+          onChange={handleAccordionChange("closed")}
+          sx={{ boxShadow: "none", paddingY: 2 }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            sx={{ backgroundColor: "#fc8181" }}
+          >
+            <Typography
+              variant="h6"
+              sx={{ textTransform: "uppercase", color: "white" }}
+            >
+              Closed
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ border: `1px solid #fc8181` }}>
+            <Grid container xs={12} padding={2} spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="タイトル"
+                  variant="outlined"
+                  name="title"
+                  value={closed.title}
+                  onChange={handleClosedChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="サブタイトル"
+                  variant="outlined"
+                  name="subTitle"
+                  value={closed.subTitle}
+                  onChange={handleClosedChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="タイトルのサイズ"
+                  variant="outlined"
+                  name="titleFontSize"
+                  value={closed.titleFontSize}
+                  onChange={handleClosedChange}
+                  type="numeric"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="サブタイトルのサイズ"
+                  variant="outlined"
+                  name="subTitleFontSize"
+                  value={closed.subTitleFontSize}
+                  onChange={handleClosedChange}
+                  type="numeric"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">カラー</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="カラー"
+                    name="color"
+                    value={closed.color}
+                    onChange={handleClosedChange}
+                  >
+                    <MenuItem value={"#68d391"}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#68d391",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#68d391" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#f6e05e"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#f6e05e",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#f6e05e" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#fc8181"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#fc8181",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#fc8181" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    表示スタイル
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Display Style"
+                    name="type"
+                    value={closed.type}
+                    onChange={handleClosedChange}
+                  >
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>利用率 %</MenuItem>
+                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    アイコン
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="アイコン"
+                    name="icon"
+                    value={closed.icon}
+                    onChange={handleClosedChange}
+                  >
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"success"}>
+                      <Image
+                        src={"/Images/aomaru_30.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
+                    </MenuItem>
+                    <MenuItem value={"warning"}>
+                      <Image
+                        src={"/Images/aomaru_16.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
+                    </MenuItem>
+                    <MenuItem value={"stop"}>
+                      <Image
+                        src={"/Images/aomaru_59.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    アイコンのサイズ
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="アイコンのサイズ"
+                    name="iconSize"
+                    value={closed.iconSize}
+                    onChange={handleClosedChange}
+                  >
+                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={200}>200</MenuItem>
+                    <MenuItem value={300}>300</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    閾値タイプ
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Threshold Type"
+                    name="threshold_type"
+                    value={closed.threshold_type}
+                    onChange={handleClosedChange}
+                  >
+                    <MenuItem value={"utilization"}>利用率</MenuItem>
+                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="閾値"
+                  variant="outlined"
+                  name="threshold"
+                  value={enter.threshold}
+                  onChange={handleEnterChange}
+                />
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+
         <Box width={"100%"} sx={{ display: "flex", justifyContent: "end" }}>
           <Button
             variant="contained"
@@ -1021,8 +1274,8 @@ const Tools = () => {
           iconSize={activeItem?.iconSize}
           titleFontSize={activeItem?.titleFontSize}
           subTitleFontSize={activeItem?.subTitleFontSize}
-          max_capacity = {enter.max_people_count}
-          backgroundColor = {activeItem.backgroundColor}
+          max_capacity={enter.max_people_count}
+          backgroundColor={activeItem.backgroundColor}
         />
       </Grid>
     </Grid>
