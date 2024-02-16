@@ -102,7 +102,29 @@ const Tools = () => {
     type: "none",
     company_id: "example_company_id",
     uid: "example_uid",
-    display_type: "Stop",
+    display_type: "Closed",
+    location_id: "example_location",
+    domain: "example_domain",
+    threshold_type: "occupancy",
+    max_people_count: 0,
+    iconSize: 300,
+    titleFontSize: 24,
+    subTitleFontSize: 12,
+    spot_id: "example spot ID",
+    backgroundColor: "#EF0606",
+    closing_time: null,
+    opening_time: null,
+  });
+  const [holiday, setHoliday] = useState({
+    threshold: 30,
+    color: "#fc8181",
+    icon: "stop",
+    title: "ストップ",
+    subTitle: "入らないでください",
+    type: "none",
+    company_id: "example_company_id",
+    uid: "example_uid",
+    display_type: "Holiday",
     location_id: "example_location",
     domain: "example_domain",
     threshold_type: "occupancy",
@@ -169,6 +191,10 @@ const Tools = () => {
           setExpandedAccordion("closed");
           setActiveItem(closed);
           break;
+        case "holiday":
+          setExpandedAccordion("holiday");
+          setActiveItem(holiday);
+          break;
         default:
           setExpandedAccordion(null);
       }
@@ -198,6 +224,13 @@ const Tools = () => {
     const { name, value } = event.target;
 
     setClosed((prevData) => ({ ...prevData, [name]: value }));
+    setActiveItem((prevData) => ({ ...prevData, [name]: value }));
+  };
+  const handleHolidayhange = (event) => {
+    console.log(event);
+    const { name, value } = event.target;
+
+    setHoliday((prevData) => ({ ...prevData, [name]: value }));
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -1218,6 +1251,223 @@ const Tools = () => {
                     name="iconSize"
                     value={closed.iconSize}
                     onChange={handleClosedChange}
+                  >
+                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={200}>200</MenuItem>
+                    <MenuItem value={300}>300</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Closing Time"
+                    name="closing_time"
+                    value={closed.closing_time}
+                    onChange={(event) =>
+                      handleTimeChange("closing_time", event)
+                    }
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Opening Time"
+                    name="opening_time"
+                    value={closed.opening_time}
+                    onChange={(event) =>
+                      handleTimeChange("opening_time", event)
+                    }
+                  />
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expandedAccordion === "holiday"}
+          onChange={handleAccordionChange("holiday")}
+          sx={{ boxShadow: "none", paddingY: 2 }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            sx={{ backgroundColor: "#fc8181" }}
+          >
+            <Typography
+              variant="h6"
+              sx={{ textTransform: "uppercase", color: "white" }}
+            >
+              Holiday
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ border: `1px solid #fc8181` }}>
+            <Grid container xs={12} padding={2} spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="タイトル"
+                  variant="outlined"
+                  name="title"
+                  value={closed.title}
+                  onChange={handleHolidayhange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="サブタイトル"
+                  variant="outlined"
+                  name="subTitle"
+                  value={closed.subTitle}
+                  onChange={handleHolidayhange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="タイトルのサイズ"
+                  variant="outlined"
+                  name="titleFontSize"
+                  value={closed.titleFontSize}
+                  onChange={handleHolidayhange}
+                  type="numeric"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="サブタイトルのサイズ"
+                  variant="outlined"
+                  name="subTitleFontSize"
+                  value={closed.subTitleFontSize}
+                  onChange={handleHolidayhange}
+                  type="numeric"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">カラー</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="カラー"
+                    name="color"
+                    value={closed.color}
+                    onChange={handleHolidayhange}
+                  >
+                    <MenuItem value={"#68d391"}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#68d391",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#68d391" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#f6e05e"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#f6e05e",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#f6e05e" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#fc8181"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#fc8181",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#fc8181" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    表示スタイル
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Display Style"
+                    name="type"
+                    value={closed.type}
+                    onChange={handleHolidayhange}
+                  >
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"utilization"}>Opening Time</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    アイコン
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="アイコン"
+                    name="icon"
+                    value={closed.icon}
+                    onChange={handleHolidayhange}
+                  >
+                    <MenuItem value={"none"}>無し</MenuItem>
+                    <MenuItem value={"success"}>
+                      <Image
+                        src={"/Images/aomaru_30.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
+                    </MenuItem>
+                    <MenuItem value={"warning"}>
+                      <Image
+                        src={"/Images/aomaru_16.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
+                    </MenuItem>
+                    <MenuItem value={"stop"}>
+                      <Image
+                        src={"/Images/aomaru_59.png"}
+                        width={22}
+                        height={22}
+                        alt=""
+                      />
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    アイコンのサイズ
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="アイコンのサイズ"
+                    name="iconSize"
+                    value={closed.iconSize}
+                    onChange={handleHolidayhange}
                   >
                     <MenuItem value={100}>100</MenuItem>
                     <MenuItem value={200}>200</MenuItem>
