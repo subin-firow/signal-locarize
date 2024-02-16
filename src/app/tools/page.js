@@ -28,6 +28,9 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 const Tools = () => {
   const [enter, setEnter] = useState({
@@ -109,6 +112,8 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#EF0606",
+    closing_time: null, 
+    opening_time: null,
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -189,7 +194,9 @@ const Tools = () => {
   };
 
   const handleClosedChange = (event) => {
+    console.log(event);
     const { name, value } = event.target;
+    
     setClosed((prevData) => ({ ...prevData, [name]: value }));
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -206,6 +213,7 @@ const Tools = () => {
   };
 
   const onSave = async () => {
+    console.log(closed);
     if (enter.spot_id && enter.location_id) {
       if (enter.max_people_count == "") {
         (enter.max_people_count = 100),
@@ -222,6 +230,7 @@ const Tools = () => {
         await Save(warning);
         await Save(stop);
         await Save(closed);
+
         toast.success("保存に成功しました！!");
       } catch (error) {
         toast.error(
@@ -1148,8 +1157,7 @@ const Tools = () => {
                     onChange={handleClosedChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>利用率 %</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
+                    <MenuItem value={"utilization"}>Opening Time</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -1232,15 +1240,15 @@ const Tools = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  label="閾値"
-                  variant="outlined"
-                  name="threshold"
-                  value={enter.threshold}
-                  onChange={handleEnterChange}
-                />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+              label="Controlled picker"
+              name="opening_time"
+              value={closed.opening_time}
+              onChange={(event)=> handleClosedChange("opening_time",event)} 
+
+              />
+              </LocalizationProvider>
               </Grid>
             </Grid>
           </AccordionDetails>
