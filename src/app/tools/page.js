@@ -1226,27 +1226,21 @@ const Tools = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    閾値タイプ
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Threshold Type"
-                    name="threshold_type"
-                    value={closed.threshold_type}
-                    onChange={handleClosedChange}
-                  >
-                    <MenuItem value={"utilization"}>利用率</MenuItem>
-                    <MenuItem value={"occupancy"}>人数</MenuItem>
-                  </Select>
-                </FormControl>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Closing Time"
+                    name="closing_time"
+                    value={closed.closing_time}
+                    onChange={(event) =>
+                      handleTimeChange("closing_time", event)
+                    }
+                  />
+                </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    label="Controlled picker"
+                    label="Opening Time"
                     name="opening_time"
                     value={closed.opening_time}
                     onChange={(event) =>
