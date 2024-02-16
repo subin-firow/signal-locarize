@@ -28,9 +28,9 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const Tools = () => {
   const [enter, setEnter] = useState({
@@ -112,7 +112,7 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#EF0606",
-    closing_time: null, 
+    closing_time: null,
     opening_time: null,
   });
 
@@ -196,7 +196,7 @@ const Tools = () => {
   const handleClosedChange = (event) => {
     console.log(event);
     const { name, value } = event.target;
-    
+
     setClosed((prevData) => ({ ...prevData, [name]: value }));
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -210,6 +210,10 @@ const Tools = () => {
     setClosed((prevData) => ({ ...prevData, [name]: value }));
 
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleTimeChange = (name, event) => {
+    setClosed((prevData) => ({ ...prevData, [name]: event }));
   };
 
   const onSave = async () => {
@@ -1240,15 +1244,16 @@ const Tools = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <TimePicker
-              label="Controlled picker"
-              name="opening_time"
-              value={closed.opening_time}
-              onChange={(event)=> handleClosedChange("opening_time",event)} 
-
-              />
-              </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Controlled picker"
+                    name="opening_time"
+                    value={closed.opening_time}
+                    onChange={(event) =>
+                      handleTimeChange("opening_time", event)
+                    }
+                  />
+                </LocalizationProvider>
               </Grid>
             </Grid>
           </AccordionDetails>
