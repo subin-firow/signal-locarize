@@ -28,6 +28,7 @@ const Demo = ({
   subTitleFontSize,
   max_capacity,
   backgroundColor,
+  displayType,
 }) => {
   const GlassmorphicGrid = styled(Grid)({
     background: backgroundColor, // Black background with transparency
@@ -128,12 +129,14 @@ const Demo = ({
             )}
           </Grid>
           <GlassmorphicGrid item xs={12} marginBottom={4}>
+            {displayType !== "Closed"  && displayType !== "Holiday" && (
             <Grid border={"solid white 6px"} borderRadius="12px">
               <BorderLinearProgress
                 variant="determinate"
                 value={max_capacity}
               />
             </Grid>
+            )}
             <Typography
               variant="h2"
               sx={{

@@ -97,7 +97,7 @@ const Tools = () => {
   const [closed, setClosed] = useState({
     threshold: 30,
     color: "#fc8181",
-    icon: "stop",
+    icon: "closed",
     title: "ストップ",
     subTitle: "入らないでください",
     type: "none",
@@ -119,7 +119,7 @@ const Tools = () => {
   const [holiday, setHoliday] = useState({
     threshold: 30,
     color: "#fc8181",
-    icon: "stop",
+    icon: "holiday",
     title: "ストップ",
     subTitle: "入らないでください",
     type: "none",
@@ -1548,6 +1548,7 @@ const Tools = () => {
           subTitleFontSize={activeItem?.subTitleFontSize}
           max_capacity={enter.max_people_count}
           backgroundColor={activeItem.backgroundColor}
+          displayType={activeItem.display_type}
         />
       </Grid>
     </Grid>
