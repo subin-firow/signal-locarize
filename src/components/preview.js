@@ -27,6 +27,7 @@ const Preview = ({
   subTitleFontSize,
   max_capacity,
   backgroundColor,
+  displayType,
 }) => {
   const GlassmorphicGrid = styled(Grid)({
     background: backgroundColor, // Black background with transparency
@@ -34,7 +35,7 @@ const Preview = ({
     borderRadius: "8px", // Adjust the border radius as needed
     padding: "16px", // Add padding for a better visual effect
   });
-  console.log(max_capacity,progress);
+
   if (max_capacity != 0 ){(max_capacity = progress * 100 / max_capacity),
   max_capacity= max_capacity.toFixed(0)  }
   else{max_capacity= progress}
@@ -147,9 +148,14 @@ const Preview = ({
             )}
           </Grid>
           <GlassmorphicGrid item xs={12}>
-            <Grid border={"solid white 2px"} borderRadius="8px">
-              <BorderLinearProgress variant="determinate" value={max_capacity} />
+          {displayType !== "Closed"  && displayType !== "Holiday" && (
+            <Grid border={"solid white 6px"} borderRadius="12px">
+              <BorderLinearProgress
+                variant="determinate"
+                value={max_capacity}
+              />
             </Grid>
+            )}
             <Typography
               sx={{
                 fontSize: { xs: "4vh", sm: "7vh", md: "10vh" },

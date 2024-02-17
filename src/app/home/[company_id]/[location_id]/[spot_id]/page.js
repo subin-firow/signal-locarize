@@ -5,6 +5,7 @@ import Preview from "@/components/preview";
 import { GetData, getRandomLiveNunber } from "@/services/index.service";
 import axios from "axios";
 import { useParams } from "next/navigation";
+//import { response } from "express";
 
 const Home = () => {
   const [data, setData] = useState({});
@@ -14,6 +15,7 @@ const Home = () => {
   const [enter, setEnter] = useState({});
   const [warning, setWarning] = useState({});
   const [stop, setStop] = useState({});
+  const [closed, setClosed] = useState({});
   const params = useParams();
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const Home = () => {
           `http://localhost:5008/v2/${params?.company_id}/${params?.location_id}/${params?.spot_id}`
         );
         setCount(response.data.count);
+        console.log(response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -44,6 +47,7 @@ const Home = () => {
         setEnter(res?.data?.enter);
         setWarning(res?.data?.warning);
         setStop(res?.data?.stop);
+        setClosed(res?.data?.closed);
         setLoading(false);
       })
       .catch((error) => setLoading(false));
@@ -61,6 +65,8 @@ const Home = () => {
     if (count > warning?.threshold) {
       setData(stop);
     }
+    
+
   }, [count]);
 
   return (
@@ -77,6 +83,7 @@ const Home = () => {
         subTitleFontSize={data?.subTitleFontSize}
         max_capacity={data?.max_people_count}
         backgroundColor={data?.backgroundColor}
+        displayType={data?.display_type}
       />
     )
   );
