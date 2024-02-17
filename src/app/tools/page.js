@@ -33,6 +33,16 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
+const daysOfWeek = [
+  { label: '月曜日', value: 'monday' },
+  { label: '火曜日', value: 'tuesday' },
+  { label: '水曜日', value: 'wednesday' },
+  { label: '木曜日', value: 'thursday' },
+  { label: '金曜日', value: 'friday' },
+  { label: '土曜日', value: 'saturday' },
+  { label: '日曜日', value: 'sunday' },
+];
+
 const Tools = () => {
   const [enter, setEnter] = useState({
     threshold: 10,
@@ -53,6 +63,8 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "",
     backgroundColor: "#26874B",
+    closing_time: "",
+    opening_time: "",
   });
   const [warning, setWarning] = useState({
     threshold: 20,
@@ -73,6 +85,8 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#897506",
+    closing_time: "",
+    opening_time: "",
   });
   const [stop, setStop] = useState({
     threshold: 30,
@@ -93,6 +107,8 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#EF0606",
+    closing_time: "",
+    opening_time: "",
   });
   const [closed, setClosed] = useState({
     threshold: 30,
@@ -135,9 +151,9 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#EF0606",
-    closing_time: null,
-    opening_time: null,
-    weekly_holiday: null,
+    closing_time: "",
+    opening_time: "",
+    weekly_holiday: [],
     special_holidays: null,
   });
 
@@ -204,6 +220,19 @@ const Tools = () => {
     }
   };
 
+
+ /* const MultipleSelect = () => {
+    const [weekly_holiday, setSelectedDays] = useState([]);}*/
+  
+  const handleDayChange = (event) => {
+     console.log(event);
+   //  console.log(name);
+      const { name, value } = event.target;
+     
+      setHoliday((prevData) => ({ ...prevData, [name]: value }));
+      setActiveItem((prevData) => ({ ...prevData, [name]: value }));
+    };
+
   const handleEnterChange = (event) => {
     const { name, value } = event.target;
     setEnter((prevData) => ({ ...prevData, [name]: value }));
@@ -249,6 +278,9 @@ const Tools = () => {
   };
 
   const handleTimeChange = (name, event) => {
+    console.log(name);
+    console.log(event);
+    //console.log(event.toLocaleTimeString())
     setClosed((prevData) => ({ ...prevData, [name]: event }));
   };
   const handleWeeklyHolidayChange = (name, event) => {
@@ -1270,7 +1302,7 @@ const Tools = () => {
                     name="closing_time"
                     value={closed.closing_time}
                     onChange={(event) =>
-                      handleTimeChange("closing_time", event)
+                      handleTimeChange("closing_time",event)
                     }
                   />
                 </LocalizationProvider>
@@ -1481,25 +1513,22 @@ const Tools = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                  週休日
-                  </InputLabel>
+
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="demo-multiple-select-label"
+                    id="weekly_holiday"
+                    multiple
+                    value={holiday.weekly_holiday} 
+                    onChange={(event) =>
+                      handleDayChange("weekly_holiday", event)}
                     label="週休日"
-                    name="weekly_holiday"
-                    value={holiday.weekly_holiday}
-                    onChange={(event)=> handleWeeklyHolidayChange("weekly_holiday",event)}
-                  >
-                    <MenuItem value={"monday"}>月曜日</MenuItem>
-                    <MenuItem value={"tuesday"}>火曜日</MenuItem>
-                    <MenuItem value={"wednesday"}>水曜日</MenuItem>
-                    <MenuItem value={"thursday"}>木曜日</MenuItem>
-                    <MenuItem value={"friday"}>金曜日</MenuItem>
-                    <MenuItem value={"saturday"}>土曜日</MenuItem>
-                    <MenuItem value={"sunday"}>日曜日</MenuItem>
-                  </Select>
+                     >
+                    {daysOfWeek.map((day) => (
+                      <MenuItem key={day.value} value={day.value}>
+                        {day.label}
+                      </MenuItem>
+                    ))}
+                </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
