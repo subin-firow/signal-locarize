@@ -1200,7 +1200,6 @@ const Tools = () => {
                     onChange={handleClosedChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>Opening Time</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -1417,7 +1416,6 @@ const Tools = () => {
                     onChange={handleHolidayChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
-                    <MenuItem value={"utilization"}>Opening Time</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
