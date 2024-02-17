@@ -29,6 +29,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
@@ -136,6 +137,8 @@ const Tools = () => {
     backgroundColor: "#EF0606",
     closing_time: null,
     opening_time: null,
+    weekly_holiday: null,
+    special_holidays: null,
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -226,7 +229,7 @@ const Tools = () => {
     setClosed((prevData) => ({ ...prevData, [name]: value }));
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
-  const handleHolidayhange = (event) => {
+  const handleHolidayChange = (event) => {
     console.log(event);
     const { name, value } = event.target;
 
@@ -247,6 +250,9 @@ const Tools = () => {
 
   const handleTimeChange = (name, event) => {
     setClosed((prevData) => ({ ...prevData, [name]: event }));
+  };
+  const handleWeeklyHolidayChange = (name, event) => {
+    setHoliday((prevData) => ({ ...prevData, [name]: event }));
   };
 
   const onSave = async () => {
@@ -1261,7 +1267,7 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    label="Closing Time"
+                    label="営業終了時間"
                     name="closing_time"
                     value={closed.closing_time}
                     onChange={(event) =>
@@ -1273,7 +1279,7 @@ const Tools = () => {
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    label="Opening Time"
+                    label="営業開始時間"
                     name="opening_time"
                     value={closed.opening_time}
                     onChange={(event) =>
@@ -1312,8 +1318,8 @@ const Tools = () => {
                   label="タイトル"
                   variant="outlined"
                   name="title"
-                  value={closed.title}
-                  onChange={handleHolidayhange}
+                  value={holiday.title}
+                  onChange={handleHolidayChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -1323,8 +1329,8 @@ const Tools = () => {
                   label="サブタイトル"
                   variant="outlined"
                   name="subTitle"
-                  value={closed.subTitle}
-                  onChange={handleHolidayhange}
+                  value={holiday.subTitle}
+                  onChange={handleHolidayChange}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -1334,8 +1340,8 @@ const Tools = () => {
                   label="タイトルのサイズ"
                   variant="outlined"
                   name="titleFontSize"
-                  value={closed.titleFontSize}
-                  onChange={handleHolidayhange}
+                  value={holiday.titleFontSize}
+                  onChange={handleHolidayChange}
                   type="numeric"
                 />
               </Grid>
@@ -1346,8 +1352,8 @@ const Tools = () => {
                   label="サブタイトルのサイズ"
                   variant="outlined"
                   name="subTitleFontSize"
-                  value={closed.subTitleFontSize}
-                  onChange={handleHolidayhange}
+                  value={holiday.subTitleFontSize}
+                  onChange={handleHolidayChange}
                   type="numeric"
                 />
               </Grid>
@@ -1359,8 +1365,8 @@ const Tools = () => {
                     id="demo-simple-select"
                     label="カラー"
                     name="color"
-                    value={closed.color}
-                    onChange={handleHolidayhange}
+                    value={holiday.color}
+                    onChange={handleHolidayChange}
                   >
                     <MenuItem value={"#68d391"}>
                       <Box
@@ -1407,8 +1413,8 @@ const Tools = () => {
                     id="demo-simple-select"
                     label="Display Style"
                     name="type"
-                    value={closed.type}
-                    onChange={handleHolidayhange}
+                    value={holiday.type}
+                    onChange={handleHolidayChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
                     <MenuItem value={"utilization"}>Opening Time</MenuItem>
@@ -1425,8 +1431,8 @@ const Tools = () => {
                     id="demo-simple-select"
                     label="アイコン"
                     name="icon"
-                    value={closed.icon}
-                    onChange={handleHolidayhange}
+                    value={holiday.icon}
+                    onChange={handleHolidayChange}
                   >
                     <MenuItem value={"none"}>無し</MenuItem>
                     <MenuItem value={"success"}>
@@ -1466,8 +1472,8 @@ const Tools = () => {
                     id="demo-simple-select"
                     label="アイコンのサイズ"
                     name="iconSize"
-                    value={closed.iconSize}
-                    onChange={handleHolidayhange}
+                    value={holiday.iconSize}
+                    onChange={handleHolidayChange}
                   >
                     <MenuItem value={100}>100</MenuItem>
                     <MenuItem value={200}>200</MenuItem>
@@ -1476,25 +1482,36 @@ const Tools = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <TimePicker
-                    label="Closing Time"
-                    name="closing_time"
-                    value={closed.closing_time}
-                    onChange={(event) =>
-                      handleTimeChange("closing_time", event)
-                    }
-                  />
-                </LocalizationProvider>
+              <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                  週休日
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="週休日"
+                    name="weekly_holiday"
+                    value={holiday.weekly_holiday}
+                    onChange={(event)=> handleWeeklyHolidayChange("weekly_holiday",event)}
+                  >
+                    <MenuItem value={"monday"}>月曜日</MenuItem>
+                    <MenuItem value={"tuesday"}>火曜日</MenuItem>
+                    <MenuItem value={"wednesday"}>水曜日</MenuItem>
+                    <MenuItem value={"thursday"}>木曜日</MenuItem>
+                    <MenuItem value={"friday"}>金曜日</MenuItem>
+                    <MenuItem value={"saturday"}>土曜日</MenuItem>
+                    <MenuItem value={"sunday"}>日曜日</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <TimePicker
-                    label="Opening Time"
-                    name="opening_time"
-                    value={closed.opening_time}
+                  <DatePicker
+                    label="特別な休日"
+                    name="special_holidays"
+                    value={holiday.special_holidays}
                     onChange={(event) =>
-                      handleTimeChange("opening_time", event)
+                      handleTimeChange("special_holidays", event)
                     }
                   />
                 </LocalizationProvider>
