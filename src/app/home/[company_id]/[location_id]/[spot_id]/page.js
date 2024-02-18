@@ -73,17 +73,29 @@ const Home = () => {
        const curTimeNew = curTime.format(('HH:mm'));
        const curTimemoment =  moment(curTimeNew, 'HH:mm');
 
-       console.log(openTime,closeTime,curTimeNew);
-       if (curTimemoment.isBetween(openTimeMoment,closeTimeMoment))
-       {
+       console.log("close time: ",closeTime,"open time :",openTime, "current time :",curTimeNew);
+       if(curTimemoment.isSameOrAfter(closeTimeMoment)){ console.log("current time is after close time");
+           isClosed = true;
+          if(curTimemoment.isSameOrAfter(openTimeMoment)&& openTimeMoment.isAfter(closeTimeMoment))
+          {isClosed= false;
+            console.log("allready opened ");
+          }
+        }else
+      {
         isClosed = false;
-       }
-       else isClosed = true;
+        console.log("open hours ");}
     }
     
   
-    if( !isClosed)
+    if( isClosed)
     {
+      console.log("this is closed time display");
+      setData(closed);
+      fetchDataTimer = 100000;
+     
+    } else 
+    {
+      
       if (count <= enter?.threshold) {
         setData(enter);
       }
@@ -95,11 +107,6 @@ const Home = () => {
       if (count > warning?.threshold) {
         setData(stop);
       }
-    } else 
-    {
-      console.log("this is closed time display");
-      setData(closed);
-      fetchDataTimer = 100000;
    
   }
 
