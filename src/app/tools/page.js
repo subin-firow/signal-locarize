@@ -153,8 +153,8 @@ const Tools = () => {
     backgroundColor: "#EF0606",
     closing_time: "",
     opening_time: "",
-    weekly_holiday: [],
-    special_holidays: null,
+    weekly_holiday: ["Saturday", "Sunday"],
+    special_holidays: ['2024-02-16', '2024-02-17', '2024-02-18'],
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -227,10 +227,10 @@ const Tools = () => {
   const handleDayChange = (event) => {
      console.log(event);
    //  console.log(name);
-      const { name, value } = event.target;
+   //   const { name, value } = event.target;
      
-      setHoliday((prevData) => ({ ...prevData, [name]: value }));
-      setActiveItem((prevData) => ({ ...prevData, [name]: value }));
+   //   setHoliday((prevData) => ({ ...prevData, [name]: value }));
+   //   setActiveItem((prevData) => ({ ...prevData, [name]: value }));
     };
 
   const handleEnterChange = (event) => {
@@ -273,7 +273,7 @@ const Tools = () => {
     setWarning((prevData) => ({ ...prevData, [name]: value }));
     setStop((prevData) => ({ ...prevData, [name]: value }));
     setClosed((prevData) => ({ ...prevData, [name]: value }));
-
+    setHoliday((prevData) => ({ ...prevData, [name]: value }));
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -283,12 +283,12 @@ const Tools = () => {
     //console.log(event.toLocaleTimeString())
     setClosed((prevData) => ({ ...prevData, [name]: event }));
   };
-  const handleWeeklyHolidayChange = (name, event) => {
+  const handleSpecialHolidayChange = (name, event) => {
     setHoliday((prevData) => ({ ...prevData, [name]: event }));
   };
 
   const onSave = async () => {
-    console.log(closed);
+    console.log(holiday);
     if (enter.spot_id && enter.location_id) {
       if (enter.max_people_count == "") {
         (enter.max_people_count = 100),
@@ -301,10 +301,12 @@ const Tools = () => {
         warning.company_id = companyId;
         stop.company_id = companyId;
         closed.company_id = companyId;
+        holiday.company_id = companyId;
         await Save(enter);
         await Save(warning);
         await Save(stop);
         await Save(closed);
+        await Save(holiday);
 
         toast.success("保存に成功しました！!");
       } catch (error) {
@@ -1538,7 +1540,7 @@ const Tools = () => {
                     name="special_holidays"
                     value={holiday.special_holidays}
                     onChange={(event) =>
-                      handleTimeChange("special_holidays", event)
+                      handleSpecialHolidayChange("special_holidays", event)
                     }
                   />
                 </LocalizationProvider>

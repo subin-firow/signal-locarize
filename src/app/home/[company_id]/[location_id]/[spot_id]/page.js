@@ -19,6 +19,7 @@ const Home = () => {
   const [warning, setWarning] = useState({});
   const [stop, setStop] = useState({});
   const [closed, setClosed] = useState({});
+  const [holiday, setHoliday] = useState({});
   const params = useParams();
 
   useEffect(() => {
@@ -51,6 +52,7 @@ const Home = () => {
         setWarning(res?.data?.warning);
         setStop(res?.data?.stop);
         setClosed(res?.data?.closed);
+        setHoliday(res?.data?.holiday);
         setLoading(false);
       })
       .catch((error) => setLoading(false));
@@ -58,10 +60,12 @@ const Home = () => {
 
   useEffect(() => {
     
-    if (isTodayHoliday())
+    if (isTodayHoliday(holiday))
     {
       console.log("Today is holiday");
+      setData(holiday);
     }
+    else
     if( isClosedNow(closed))
     {
       console.log("this is closed time display");
@@ -141,26 +145,35 @@ const isClosedNow = (closed) => {
  return isClosed;
 }
 
-function isTodayHoliday() {
-  const dateArray = ['2024-02-16', '2024-02-17', '2024-02-18']; 
-  const curDay = moment().format("dddd");
+const isTodayHoliday = (holiday) =>  {
 
-  if (curDay === "Saturday" || curDay === "Monday") {
-    console.log("Today is a holiday:", curDay);
-    return true;
-  } else {
+  console.log(holiday);
+  if(holiday && holiday.weekly_holiday){
+  const dateArray = ['2024-02-16', '2024-02-17', '2024-02-18']; 
+  const weeklyholiday = Array.from(holiday.weekly_holiday);
+  console.log("weekly holiday",weeklyholiday);
+  const curDay = moment().format("dddd");
+  for(let i = 0; i < weeklyholiday.length; i++)
+  {
+    if(curDay ===weeklyholiday[i] ){
+      console.log("Today is a holiday weekly:", curDay);
+      return true;
+    }
+  }
     const currentDate = moment().format('YYYY-MM-DD');
     for (let i = 0; i < dateArray.length; i++) {
       if (currentDate === dateArray[i]) {
-        console.log("Today is a holiday:", currentDate);
+        console.log("Today is a holiday date :", currentDate);
         return true;
       }
     }
   }
-
   console.log("Today is not a holiday.");
   return false;
 }
+
+  
+
 
 
 
