@@ -5,8 +5,11 @@ import Preview from "@/components/preview";
 import { GetData, getRandomLiveNunber } from "@/services/index.service";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import moment from "moment";
+import { Co2Sharp } from "@mui/icons-material";
+import { boolean } from "yup";
 //import { response } from "express";
-
+let fetchDataTimer = 10000;
 const Home = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -25,7 +28,6 @@ const Home = () => {
           `http://localhost:5008/v2/${params?.company_id}/${params?.location_id}/${params?.spot_id}`
         );
         setCount(response.data.count);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -43,6 +45,7 @@ const Home = () => {
     setLoading(true);
     GetData(params?.company_id, params?.location_id,params?.spot_id)
       .then((res) => {
+        console.log(res.data);
         setData(res?.data?.enter);
         setEnter(res?.data?.enter);
         setWarning(res?.data?.warning);
@@ -54,18 +57,51 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (count <= enter?.threshold) {
-      setData(enter);
-    }
+    
+   
+    let openTime;
+    let closeTime;
+    let curTime;
+    let isClosed= false;
+    if(closed)
+    {
+       openTime = moment(closed.opening_time).format('HH:mm');
+       closeTime  = moment(closed.closing_time).format('HH:mm');
+       curTime = moment();
+       const openTimeMoment = moment(openTime, 'HH:mm');
+       const closeTimeMoment = moment(closeTime, 'HH:mm');
+       const curTimeNew = curTime.format(('HH:mm'));
+       const curTimemoment =  moment(curTimeNew, 'HH:mm');
 
-    if (count > enter?.threshold && count <= warning?.threshold) {
-      setData(warning);
-    }
-
-    if (count > warning?.threshold) {
-      setData(stop);
+       console.log(openTime,closeTime,curTimeNew);
+       if (curTimemoment.isBetween(openTimeMoment,closeTimeMoment))
+       {
+        isClosed = false;
+       }
+       else isClosed = true;
     }
     
+  
+    if( !isClosed)
+    {
+      if (count <= enter?.threshold) {
+        setData(enter);
+      }
+  
+      if (count > enter?.threshold && count <= warning?.threshold) {
+        setData(warning);
+      }
+  
+      if (count > warning?.threshold) {
+        setData(stop);
+      }
+    } else 
+    {
+      console.log("this is closed time display");
+      setData(closed);
+      fetchDataTimer = 100000;
+   
+  }
 
   }, [count]);
 
