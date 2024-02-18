@@ -112,9 +112,9 @@ const Tools = () => {
   });
   const [closed, setClosed] = useState({
     threshold: 30,
-    color: "#fc8181",
+    color: "#4169E1",
     icon: "closed",
-    title: "ストップ",
+    title: "営業終了時間",
     subTitle: "入らないでください",
     type: "none",
     company_id: "example_company_id",
@@ -134,9 +134,9 @@ const Tools = () => {
   });
   const [holiday, setHoliday] = useState({
     threshold: 30,
-    color: "#fc8181",
+    color: "#333333",
     icon: "holiday",
-    title: "ストップ",
+    title: "休業日",
     subTitle: "入らないでください",
     type: "none",
     company_id: "example_company_id",
