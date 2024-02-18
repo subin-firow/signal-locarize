@@ -58,36 +58,8 @@ const Home = () => {
 
   useEffect(() => {
     
-   
-    let openTime;
-    let closeTime;
-    let curTime;
-    let isClosed= false;
-    if(closed)
-    {
-       openTime = moment(closed.opening_time).format('HH:mm');
-       closeTime  = moment(closed.closing_time).format('HH:mm');
-       curTime = moment();
-       const openTimeMoment = moment(openTime, 'HH:mm');
-       const closeTimeMoment = moment(closeTime, 'HH:mm');
-       const curTimeNew = curTime.format(('HH:mm'));
-       const curTimemoment =  moment(curTimeNew, 'HH:mm');
-
-       console.log("close time: ",closeTime,"open time :",openTime, "current time :",curTimeNew);
-       if(curTimemoment.isSameOrAfter(closeTimeMoment)){ console.log("current time is after close time");
-           isClosed = true;
-          if(curTimemoment.isSameOrAfter(openTimeMoment)&& openTimeMoment.isAfter(closeTimeMoment))
-          {isClosed= false;
-            console.log("allready opened ");
-          }
-        }else
-      {
-        isClosed = false;
-        console.log("open hours ");}
-    }
-    
   
-    if( isClosed)
+    if( isClosedNow(closed))
     {
       console.log("this is closed time display");
       setData(closed);
@@ -132,5 +104,43 @@ const Home = () => {
   );
   return;
 };
+/*
+const isTodayHoliday = (holiday)
+{
+  return false;
+};*/
+
+const isClosedNow = (closed) => {
+  // Parse opening time and closing time as moment objects
+  let openTime;
+  let closeTime;
+  let curTime;
+  let isClosed= false;
+  if(closed)
+  {
+     openTime = moment(closed.opening_time).format('HH:mm');
+     closeTime  = moment(closed.closing_time).format('HH:mm');
+     curTime = moment();
+     const openTimeMoment = moment(openTime, 'HH:mm');
+     const closeTimeMoment = moment(closeTime, 'HH:mm');
+     const curTimeNew = curTime.format(('HH:mm'));
+     const curTimemoment =  moment(curTimeNew, 'HH:mm');
+
+     console.log("close time: ",closeTime,"open time :",openTime, "current time :",curTimeNew);
+     if(curTimemoment.isSameOrAfter(closeTimeMoment)){ console.log("current time is after close time");
+         isClosed = true;
+        if(curTimemoment.isSameOrAfter(openTimeMoment)&& openTimeMoment.isAfter(closeTimeMoment))
+        {isClosed= false;
+          console.log("allready opened ");
+        }
+      }else
+    {
+      isClosed = false;
+      console.log("open hours ");}
+  }
+  
+ return isClosed;
+};
+
 
 export default Home;
