@@ -58,7 +58,10 @@ const Home = () => {
 
   useEffect(() => {
     
-  
+    if (isTodayHoliday())
+    {
+      console.log("Today is holiday");
+    }
     if( isClosedNow(closed))
     {
       console.log("this is closed time display");
@@ -104,11 +107,7 @@ const Home = () => {
   );
   return;
 };
-/*
-const isTodayHoliday = (holiday)
-{
-  return false;
-};*/
+
 
 const isClosedNow = (closed) => {
   // Parse opening time and closing time as moment objects
@@ -140,7 +139,29 @@ const isClosedNow = (closed) => {
   }
   
  return isClosed;
-};
+}
+
+function isTodayHoliday() {
+  const dateArray = ['2024-02-16', '2024-02-17', '2024-02-18']; 
+  const curDay = moment().format("dddd");
+
+  if (curDay === "Saturday" || curDay === "Monday") {
+    console.log("Today is a holiday:", curDay);
+    return true;
+  } else {
+    const currentDate = moment().format('YYYY-MM-DD');
+    for (let i = 0; i < dateArray.length; i++) {
+      if (currentDate === dateArray[i]) {
+        console.log("Today is a holiday:", currentDate);
+        return true;
+      }
+    }
+  }
+
+  console.log("Today is not a holiday.");
+  return false;
+}
+
 
 
 export default Home;
