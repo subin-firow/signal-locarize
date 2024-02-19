@@ -32,15 +32,16 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { CookieSharp } from "@mui/icons-material";
 
 const daysOfWeek = [
-  { label: '月曜日', value: 'monday' },
-  { label: '火曜日', value: 'tuesday' },
-  { label: '水曜日', value: 'wednesday' },
-  { label: '木曜日', value: 'thursday' },
-  { label: '金曜日', value: 'friday' },
-  { label: '土曜日', value: 'saturday' },
-  { label: '日曜日', value: 'sunday' },
+  { label: '月曜日', value: 'Monday' },
+  { label: '火曜日', value: 'Tuesday' },
+  { label: '水曜日', value: 'Wednesday' },
+  { label: '木曜日', value: 'Thursday' },
+  { label: '金曜日', value: 'Friday' },
+  { label: '土曜日', value: 'Saturday' },
+  { label: '日曜日', value: 'Sunday' },
 ];
 
 const Tools = () => {
@@ -112,7 +113,7 @@ const Tools = () => {
   });
   const [closed, setClosed] = useState({
     threshold: 30,
-    color: "#4169E1",
+    color: "#87CEEB",
     icon: "closed",
     title: "営業終了時間",
     subTitle: "入らないでください",
@@ -128,13 +129,13 @@ const Tools = () => {
     titleFontSize: 24,
     subTitleFontSize: 12,
     spot_id: "example spot ID",
-    backgroundColor: "#EF0606",
+    backgroundColor: "#5DADE2",
     closing_time: null,
     opening_time: null,
   });
   const [holiday, setHoliday] = useState({
     threshold: 30,
-    color: "#333333",
+    color: "#A9A9A9",
     icon: "holiday",
     title: "休業日",
     subTitle: "入らないでください",
@@ -150,10 +151,10 @@ const Tools = () => {
     titleFontSize: 24,
     subTitleFontSize: 12,
     spot_id: "example spot ID",
-    backgroundColor: "#EF0606",
+    backgroundColor: "#808080",
     closing_time: "",
     opening_time: "",
-    weekly_holiday: ["Saturday", "Sunday"],
+    weekly_holiday: [],
     special_holidays: ['2024-02-16', '2024-02-17', '2024-02-18'],
   });
 
@@ -226,11 +227,13 @@ const Tools = () => {
   
   const handleDayChange = (event) => {
      console.log(event);
-   //  console.log(name);
-   //   const { name, value } = event.target;
+    
+      const { name, value } = event.target;
+      console.log(name);
+      console.log(value);
      
-   //   setHoliday((prevData) => ({ ...prevData, [name]: value }));
-   //   setActiveItem((prevData) => ({ ...prevData, [name]: value }));
+      setHoliday((prevData) => ({ ...prevData, [name]: value }));
+      setActiveItem((prevData) => ({ ...prevData, [name]: value }));
     };
 
   const handleEnterChange = (event) => {
@@ -285,6 +288,43 @@ const Tools = () => {
   };
   const handleSpecialHolidayChange = (name, event) => {
     setHoliday((prevData) => ({ ...prevData, [name]: event }));
+  };
+
+  const handleCsvUpload = (event) => {
+    const { name, value } = event.target;
+    console.log(name);
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = (event) => {
+      const csvData = event.target.result;
+      const datesArray = [];
+
+      // Split CSV data into lines
+      const lines = csvData.split(/\r\n|\n/);
+      
+
+      // Process each line (assuming each line contains a date in yyyy-mm-dd format)
+      lines.forEach((line) => {
+        console.log(line);
+        // Validate date format (optional)
+       // const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        const dateRegex = /^\d{4}\/\d{2}\/\d{2}$/;
+        if (dateRegex.test(line)) {
+          datesArray.push(line);
+          holiday.special_holidays.push(line);
+        }
+      });
+
+      // Do something with the datesArray (e.g., update state)
+     // holiday.special_holidays= datesArray;
+      console.log('Dates Array:', datesArray);
+      console.log('Dates Array:', holiday.special_holidays);
+      setHoliday((prevData) => ({ ...prevData, ['special_holidays']: datesArray }));
+      console.log(holiday);
+    };
+
+    reader.readAsText(file);
   };
 
   const onSave = async () => {
@@ -548,6 +588,28 @@ const Tools = () => {
                         <Typography sx={{ color: "#fc8181" }}>"e"</Typography>
                       </Box>
                     </MenuItem>
+                    <MenuItem value={"#87CEEB"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#87CEEB",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#87CEEB" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#A9A9A9"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#A9A9A9",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#A9A9A9" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -769,6 +831,28 @@ const Tools = () => {
                         }}
                       >
                         <Typography sx={{ color: "#fc8181" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#87CEEB"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#87CEEB",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#87CEEB" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#A9A9A9"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#A9A9A9",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#A9A9A9" }}>"e"</Typography>
                       </Box>
                     </MenuItem>
                   </Select>
@@ -994,6 +1078,28 @@ const Tools = () => {
                         <Typography sx={{ color: "#fc8181" }}>"e"</Typography>
                       </Box>
                     </MenuItem>
+                    <MenuItem value={"#87CEEB"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#87CEEB",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#87CEEB" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#A9A9A9"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#A9A9A9",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#A9A9A9" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -1117,7 +1223,7 @@ const Tools = () => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            sx={{ backgroundColor: "#fc8181" }}
+            sx={{ backgroundColor: "#87CEEB" }}
           >
             <Typography
               variant="h6"
@@ -1126,7 +1232,7 @@ const Tools = () => {
               Closed
             </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ border: `1px solid #fc8181` }}>
+          <AccordionDetails sx={{ border: `1px solid #87CEEB` }}>
             <Grid container xs={12} padding={2} spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -1215,6 +1321,28 @@ const Tools = () => {
                         }}
                       >
                         <Typography sx={{ color: "#fc8181" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#87CEEB"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#87CEEB",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#87CEEB" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#A9A9A9"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#A9A9A9",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#A9A9A9" }}>"e"</Typography>
                       </Box>
                     </MenuItem>
                   </Select>
@@ -1333,7 +1461,7 @@ const Tools = () => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            sx={{ backgroundColor: "#fc8181" }}
+            sx={{ backgroundColor: "#A9A9A9" }}
           >
             <Typography
               variant="h6"
@@ -1342,7 +1470,7 @@ const Tools = () => {
               Holiday
             </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ border: `1px solid #fc8181` }}>
+          <AccordionDetails sx={{ border: `1px solid #A9A9A9` }}>
             <Grid container xs={12} padding={2} spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -1433,6 +1561,28 @@ const Tools = () => {
                         <Typography sx={{ color: "#fc8181" }}>"e"</Typography>
                       </Box>
                     </MenuItem>
+                    <MenuItem value={"#87CEEB"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#87CEEB",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#87CEEB" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
+                    <MenuItem value={"#A9A9A9"}>
+                      {" "}
+                      <Box
+                        sx={{
+                          backgroundColor: "#A9A9A9",
+                          width: "100%",
+                        }}
+                      >
+                        <Typography sx={{ color: "#A9A9A9" }}>"e"</Typography>
+                      </Box>
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -1519,10 +1669,11 @@ const Tools = () => {
                   <Select
                     labelId="demo-multiple-select-label"
                     id="weekly_holiday"
+                    name="weekly_holiday"
                     multiple
                     value={holiday.weekly_holiday} 
                     onChange={(event) =>
-                      handleDayChange("weekly_holiday", event)}
+                      handleDayChange( event)}
                     label="週休日"
                      >
                     {daysOfWeek.map((day) => (
@@ -1534,17 +1685,21 @@ const Tools = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="特別な休日"
-                    name="special_holidays"
-                    value={holiday.special_holidays}
-                    onChange={(event) =>
-                      handleSpecialHolidayChange("special_holidays", event)
-                    }
-                  />
-                </LocalizationProvider>
-              </Grid>
+  <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <input
+      accept=".csv"
+      id="csv-upload"
+      type="file"
+      style={{ display: 'none' }}
+      onChange={(event) => handleCsvUpload(event)}
+    />
+    <label htmlFor="csv-upload">
+      <Button variant="contained" component="span">
+        Upload Holiday list CSV File
+      </Button>
+    </label>
+  </LocalizationProvider>
+</Grid>
             </Grid>
           </AccordionDetails>
         </Accordion>
