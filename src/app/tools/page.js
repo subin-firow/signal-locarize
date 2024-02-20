@@ -64,8 +64,8 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "",
     backgroundColor: "#26874B",
-    closing_time: "",
-    opening_time: "",
+   // closing_time: "",
+ //   opening_time: "",
   });
   const [warning, setWarning] = useState({
     threshold: 20,
@@ -86,8 +86,8 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#897506",
-    closing_time: "",
-    opening_time: "",
+    //closing_time: "",
+  //  opening_time: "",
   });
   const [stop, setStop] = useState({
     threshold: 30,
@@ -108,8 +108,8 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#EF0606",
-    closing_time: "",
-    opening_time: "",
+   // closing_time: "",
+   // opening_time: "",
   });
   const [closed, setClosed] = useState({
     threshold: 30,
@@ -152,10 +152,10 @@ const Tools = () => {
     subTitleFontSize: 12,
     spot_id: "example spot ID",
     backgroundColor: "#808080",
-    closing_time: "",
-    opening_time: "",
+    //closing_time: "",
+   // opening_time: "",
     weekly_holiday: [],
-    special_holidays: ['2024-02-16', '2024-02-17', '2024-02-18'],
+    special_holidays: [],
   });
 
   const [expandedAccordion, setExpandedAccordion] = useState(null);
@@ -226,11 +226,11 @@ const Tools = () => {
     const [weekly_holiday, setSelectedDays] = useState([]);}*/
   
   const handleDayChange = (event) => {
-     console.log(event);
+    // console.log(event);
     
       const { name, value } = event.target;
-      console.log(name);
-      console.log(value);
+   //   console.log(name);
+    //  console.log(value);
      
       setHoliday((prevData) => ({ ...prevData, [name]: value }));
       setActiveItem((prevData) => ({ ...prevData, [name]: value }));
@@ -255,14 +255,14 @@ const Tools = () => {
   };
 
   const handleClosedChange = (event) => {
-    console.log(event);
+   // console.log(event);
     const { name, value } = event.target;
 
     setClosed((prevData) => ({ ...prevData, [name]: value }));
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
   const handleHolidayChange = (event) => {
-    console.log(event);
+   // console.log(event);
     const { name, value } = event.target;
 
     setHoliday((prevData) => ({ ...prevData, [name]: value }));
@@ -281,8 +281,8 @@ const Tools = () => {
   };
 
   const handleTimeChange = (name, event) => {
-    console.log(name);
-    console.log(event);
+   // console.log(name);
+   // console.log(event);
     //console.log(event.toLocaleTimeString())
     setClosed((prevData) => ({ ...prevData, [name]: event }));
   };
@@ -306,7 +306,7 @@ const Tools = () => {
 
       // Process each line (assuming each line contains a date in yyyy-mm-dd format)
       lines.forEach((line) => {
-        console.log(line);
+      //  console.log(line);
         // Validate date format (optional)
        // const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
         const dateRegex = /^\d{4}\/\d{2}\/\d{2}$/;
@@ -318,17 +318,17 @@ const Tools = () => {
 
       // Do something with the datesArray (e.g., update state)
      // holiday.special_holidays= datesArray;
-      console.log('Dates Array:', datesArray);
-      console.log('Dates Array:', holiday.special_holidays);
+   //   console.log('Dates Array:', datesArray);
+    //  console.log('Dates Array:', holiday.special_holidays);
       setHoliday((prevData) => ({ ...prevData, ['special_holidays']: datesArray }));
-      console.log(holiday);
+   //   console.log(holiday);
     };
 
     reader.readAsText(file);
   };
 
   const onSave = async () => {
-    console.log(holiday);
+   // console.log(holiday);
     if (enter.spot_id && enter.location_id) {
       if (enter.max_people_count == "") {
         (enter.max_people_count = 100),
@@ -353,7 +353,7 @@ const Tools = () => {
         toast.error(
           "保存操作に失敗しました。サポートチームまでご連絡ください。"
         );
-        console.log(error);
+   //     console.log(error);
       }
     } else {
       toast.success("スポットIDとロケーションIDを正しく入力してください。");
@@ -1695,7 +1695,7 @@ const Tools = () => {
     />
     <label htmlFor="csv-upload">
       <Button variant="contained" component="span">
-        Upload Holiday list CSV File
+        他の休日リストを アップロード
       </Button>
     </label>
   </LocalizationProvider>

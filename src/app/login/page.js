@@ -26,7 +26,7 @@ const Login = () => {
     axios
       .post(`http://localhost:5008/v1/login`, details)
       .then((res) => {
-        console.log(res.data.data);
+    //    console.log(res.data.data);
         setLoading(false);
         toast.dismiss();
         toast((t) => <CustomToast type="success" message="ログインに成功した" />);

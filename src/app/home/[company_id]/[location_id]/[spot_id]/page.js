@@ -20,6 +20,8 @@ const Home = () => {
   const [stop, setStop] = useState({});
   const [closed, setClosed] = useState({});
   const [holiday, setHoliday] = useState({});
+  const [styleversion, setStyleVerion] = useState({});
+  const [closed_vacation, setClosedVacation] = useState({});
   const params = useParams();
 
   useEffect(() => {
@@ -29,9 +31,13 @@ const Home = () => {
           `http://localhost:5008/v2/${params?.company_id}/${params?.location_id}/${params?.spot_id}`
         );
         setCount(response.data.count);
+        setStyleVerion(response.data.style_version);
+        const currentMinute = moment().minute();
+        setClosedVacation(currentMinute);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+
     };
 
     fetchData();
@@ -46,7 +52,7 @@ const Home = () => {
     setLoading(true);
     GetData(params?.company_id, params?.location_id,params?.spot_id)
       .then((res) => {
-        console.log(res.data);
+    //    console.log(res.data);
         setData(res?.data?.enter);
         setEnter(res?.data?.enter);
         setWarning(res?.data?.warning);
@@ -56,19 +62,19 @@ const Home = () => {
         setLoading(false);
       })
       .catch((error) => setLoading(false));
-  }, []);
+  }, [styleversion]);
 
   useEffect(() => {
     
     if (isTodayHoliday(holiday))
     {
-      console.log("Today is holiday");
+    //  console.log("Today is holiday");
       setData(holiday);
     }
     else
     if( isClosedNow(closed))
     {
-      console.log("this is closed time display");
+    //  console.log("this is closed time display");
       setData(closed);
       fetchDataTimer = 100000;
      
@@ -89,7 +95,7 @@ const Home = () => {
    
   }
 
-  }, [count]);
+  }, [count, closed_vacation]);
 
   return (
     !loading && (
@@ -119,7 +125,7 @@ const isClosedNow = (closed) => {
   let closeTime;
   let curTime;
   let isClosed= false;
-  if(closed)
+  if(closed && closed.closing_time)
   {
      openTime = moment(closed.opening_time).format('HH:mm');
      closeTime  = moment(closed.closing_time).format('HH:mm');
@@ -129,17 +135,20 @@ const isClosedNow = (closed) => {
      const curTimeNew = curTime.format(('HH:mm'));
      const curTimemoment =  moment(curTimeNew, 'HH:mm');
 
-     console.log("close time: ",closeTime,"open time :",openTime, "current time :",curTimeNew);
-     if(curTimemoment.isSameOrAfter(closeTimeMoment)){ console.log("current time is after close time");
+   //  console.log("close time: ",closeTime,"open time :",openTime, "current time :",curTimeNew);
+     if(curTimemoment.isSameOrAfter(closeTimeMoment)){
+      // console.log("current time is after close time");
          isClosed = true;
         if(curTimemoment.isSameOrAfter(openTimeMoment)&& openTimeMoment.isAfter(closeTimeMoment))
-        {isClosed= false;
-          console.log("allready opened ");
+        {
+          isClosed= false;
+       //   console.log("allready opened ");
         }
       }else
     {
       isClosed = false;
-      console.log("open hours ");}
+   //   console.log("open hours ");
+    }
   }
   
  return isClosed;
@@ -147,28 +156,31 @@ const isClosedNow = (closed) => {
 
 const isTodayHoliday = (holiday) =>  {
 
-  console.log(holiday);
+ // console.log(holiday);
   if(holiday && holiday.weekly_holiday){
-  const dateArray = ['2024-02-16', '2024-02-17', '2024-02-18']; 
+ 
   const weeklyholiday = Array.from(holiday.weekly_holiday);
-  console.log("weekly holiday",weeklyholiday);
+ // console.log("weekly holiday",weeklyholiday);
   const curDay = moment().format("dddd");
   for(let i = 0; i < weeklyholiday.length; i++)
   {
-    if(curDay ===weeklyholiday[i] ){
-      console.log("Today is a holiday weekly:", curDay);
+    if(curDay === weeklyholiday[i] ){
+     // console.log("Today is a holiday weekly:", curDay);
       return true;
     }
   }
-    const currentDate = moment().format('YYYY-MM-DD');
+    const currentDate = moment().format('YYYY/MM/DD');
+   // console.log(currentDate);
+    const dateArray = Array.from(holiday.special_holidays);
+ //   console.log(dateArray);
     for (let i = 0; i < dateArray.length; i++) {
       if (currentDate === dateArray[i]) {
-        console.log("Today is a holiday date :", currentDate);
+     //   console.log("Today is a holiday date :", currentDate);
         return true;
       }
     }
   }
-  console.log("Today is not a holiday.");
+  //console.log("Today is not a holiday.");
   return false;
 }
 

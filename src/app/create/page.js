@@ -28,14 +28,14 @@ export default function Page() {
     }));
   };
   const handleCreate = () => {
-    console.log(details);
+  //  console.log(details);
 
     setLoading(true);
     toast.loading("アカウントを追加する");
     axios
       .post(`http://localhost:5008/v1/create-account`, details)
       .then((res) => {
-        console.log(res.data);
+    //    console.log(res.data);
         setLoading(false);
         toast.dismiss();
         toast((t) => (
