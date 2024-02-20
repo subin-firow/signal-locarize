@@ -268,6 +268,13 @@ const Tools = () => {
     setHoliday((prevData) => ({ ...prevData, [name]: value }));
     setActiveItem((prevData) => ({ ...prevData, [name]: value }));
   };
+  const handleLogout = () => {
+    // Perform logout logic here, such as clearing authentication state and redirecting
+    localStorage.removeItem('userId');
+
+    // Redirect to the login page
+    router.push('/login');
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -469,6 +476,17 @@ const Tools = () => {
             //  value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${locationId}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
             value={`<iframe src=http://3.109.149.185:3000/home/${companyId}/${enter.location_id}/${enter.spot_id}" width="400" height="350" frameborder="0" allowfullscreen></iframe>`}
           />
+          <Button
+            id="outlined-basic"
+            variant="outlined"
+            name="logout"
+            sx={{ marginLeft: 2 }}
+            style={{ borderColor: 'gray',fontWeight: 'bold'}}
+            onClick={handleLogout}
+          >
+            ログアウト
+        </Button>
+    
         </motion.div>
         <IconButton
           onClick={() => setOpenTools(!openTools)}
